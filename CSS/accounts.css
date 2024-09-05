@@ -1,0 +1,12 @@
+table {
+    border-spacing: 0.1rem;
+    text-align: center;
+    margin: 2rem auto;
+    font-size: 1.5rem;
+    border:  1px solid black;
+}
+
+td, th, caption {
+    border:  1px solid black;
+    padding: 0.5rem;
+}

@@ -1,0 +1,35 @@
+* {
+    box-sizing: border-box;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+header {
+    background-color: peachpuff;
+    padding:0.5rem 0;
+}
+
+img {
+  width: 50px;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 70%;
+    margin: 0 auto
+}
+
+ul {
+    display: flex;
+    list-style: none;
+}
+
+.list-item {
+    margin-left: 3rem;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
