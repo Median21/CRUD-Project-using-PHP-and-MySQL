@@ -1,31 +1,50 @@
+body {
+    background-image: url(../images/background.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+
+}
+
 form {
-    border:  1px solid black;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 70%;
+    background-color: white;
+    padding: 3rem 0;
+    width: 50%;
     max-width: 600px;
-    padding: 8rem 2rem;
-    margin: 0 auto;
-    margin-top: 3rem;
+    margin: 3rem auto;
+    border-radius: 8px;
+    border: 0.2px solid rgb(140, 140, 140);
     
 }
 
-h1 {
+h2 {
     margin-top: 0;
+    text-align: center;
 }
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+}
+
 input {
-    margin-bottom:0.8rem;
+    margin-bottom:2rem;
     font-size: inherit;
     padding: 0.5rem;
 }
 
 input, button {
-    width: 50%;
+    width: 100%;
 }
 
 button {
-    padding: 0.5rem 0;
+    padding: 0.8rem 0;
     cursor: pointer;
+    font-size: 1rem;
+    background: radial-gradient(circle, rgba(255,254,157,1) 0%, rgba(217,249,82,1) 100%);
+    border: none;
+}
+
+button:hover {
+    background: radial-gradient(circle, rgba(247,246,108,1) 0%, rgba(217,249,82,1) 100%);
 }

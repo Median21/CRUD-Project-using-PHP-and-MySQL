@@ -4,12 +4,27 @@
 }
 
 header {
-    background-color: peachpuff;
-    padding:0.5rem 0;
+    padding: 0.5rem 0;
+    background-image: url("../images/mockup-bakery-bread-pastry.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    color: white;
+}
+
+.logo-name {
+    display: flex;
+    align-items: center;
+}
+
+.business-name {
+    margin: 0;
+    margin-left: 1rem;
 }
 
 img {
   width: 50px;
+
 }
 
 nav {
@@ -17,7 +32,7 @@ nav {
     align-items: center;
     justify-content: space-between;
     width: 70%;
-    margin: 0 auto
+    margin: 0 auto;
 }
 
 ul {
@@ -29,7 +44,11 @@ ul {
     margin-left: 3rem;
 }
 
+.list-item:hover {
+    color: rgb(223, 222, 222);
+}
+
 a {
     text-decoration: none;
-    color: black;
+    color: white;
 }

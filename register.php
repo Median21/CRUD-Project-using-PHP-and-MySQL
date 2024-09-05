@@ -39,19 +39,21 @@
 <body>
     <?php include("header.html") ?>
 
-    <form action="register.php" method="post">
-        <h1>Create an account</h1>
-            <input type="email" name="email" id="email" placeholder="Email" autocomplete="off">
-            <input type="password" name="password" id="password" placeholder="Password">
+        <form action="register.php" method="post">
 
-        <button>Sign up</button>
-
-        <?php
+            <div class="container">
+                <h2>CREATE ACCOUNT</h2>
+                <input type="email" name="email" id="email" placeholder="Email" autocomplete="off">
+                <input type="password" name="password" id="password" placeholder="Password">   
+                <button>SIGN UP</button>
+                <?php
             if (!empty($result)) {
                 echo "<p>$result</p>";
             }
+            ?>
+            </div>
 
-        ?>
-    </form>
+        </form>
+
 </body>
 </html>
