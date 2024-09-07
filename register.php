@@ -37,9 +37,9 @@
     <title>Bakery Shop | Register</title>
 </head>
 <body>
-    <?php include("header.html") ?>
+    <?php include("header.php") ?>
 
-        <form action="register.php" method="post">
+        <form action="register.php" method="post" class="register-form">
 
             <div class="container">
                 <h2>CREATE ACCOUNT</h2>
@@ -55,5 +55,9 @@
 
         </form>
 
+    <script>
+        //Logout
+        document.getElementById("logout-dropdown").addEventListener("click", () => {document.querySelector("form").submit();})
+    </script>
 </body>
 </html>

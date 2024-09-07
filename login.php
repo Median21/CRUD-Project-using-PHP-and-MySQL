@@ -51,9 +51,9 @@
     <title>Bakery Shop | Login</title>
 </head>
 <body>
-    <?php include("header.html") ?>
+    <?php include("header.php") ?>
 
-    <form action="login.php" method="post">
+    <form action="login.php" method="post" class="login-form">
 
     <?php if (empty($_SESSION)) {?>
         <h1>Login Form</h1>
@@ -69,5 +69,11 @@
         
         
     </form>
+
+    
+    <script>
+        //Logout
+        document.getElementById("logout-dropdown").addEventListener("click", () => {document.querySelector("form").submit();})
+    </script>
 </body>
 </html>

@@ -45,7 +45,7 @@
     <title>Accounts</title>
 </head>
 <body>
-    <?php include("header.html") ?>
+    <?php include("header.php") ?>
 
     <?php if (!empty($result)) { ?>
     <form action="accounts.php" method="post">
@@ -69,5 +69,10 @@
         <h2>No Users</h2>
     <?php } ?>
 
+    
+    <script>
+        //Logout
+        document.getElementById("logout-dropdown").addEventListener("click", () => {document.querySelector("form").submit();})
+    </script>
 </body>
 </html>

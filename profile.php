@@ -48,8 +48,8 @@
     <title>Document</title>
 </head>
 <body>
-    <?php include("header.html"); ?>
-    <form action="profile.php" method="post">
+    <?php include("header.php"); ?>
+    <form action="profile.php" method="post" class="profile-form">
         <h1>Profile</h1>
         <input type="text" name="first-name" id="first-name" placeholder="First name" value=<?php echo ($row ? $row["first_name"] : "") ?>>
         <input type="text" name="last-name" id="last-name" placeholder="Last name" value=<?php echo ($row ? $row["last_name"] : "") ?>>

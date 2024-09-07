@@ -1,30 +1,6 @@
-* {
-    box-sizing: border-box;
-    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-}
-
-header {
-    padding: 0.5rem 0;
-    background-image: url("../images/mockup-bakery-bread-pastry.jpg");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    color: white;
-}
-
 .logo-name {
     display: flex;
     align-items: center;
-}
-
-.business-name {
-    margin: 0;
-    margin-left: 1rem;
-}
-
-img {
-  width: 50px;
-
 }
 
 nav {
@@ -35,20 +11,59 @@ nav {
     margin: 0 auto;
 }
 
+.logo {
+    width: 50px;
+}
+
 ul {
-    display: flex;
     list-style: none;
+    padding: 0;
 }
 
-.list-item {
-    margin-left: 3rem;
-}
-
-.list-item:hover {
-    color: rgb(223, 222, 222);
+ul li {
+    display: inline-block;
+    position: relative;
 }
 
 a {
+    display: block;
+    padding: 1.4rem;
+    color: black;
     text-decoration: none;
-    color: white;
+    text-align: center;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.logo-link {
+    padding: 0px;
+}
+
+ul li ul.dropdown li {
+    display: block;
+    width: 180%;
+    background-color: rgb(192, 187, 187);
+}
+
+ul li ul.dropdown {
+    width: 100%;
+    position: absolute;
+    display: none;
+}
+
+ul li a:hover {
+    background-color: rgb(199, 141, 66, 20%);
+    border: 1px solid white;
+    margin: -1px;
+}
+
+li:hover ul.dropdown {
+    display: block;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+form {
+    margin: 0;
 }
