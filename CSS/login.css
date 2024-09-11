@@ -1,17 +1,28 @@
-.login-form {
-    border:  1px solid black;
+.flex-container {
     display: flex;
-    flex-direction: column;
     justify-content: center;
-    align-items: center;
     width: 70%;
-    max-width: 600px;
-    padding: 8rem 2rem;
     margin: 0 auto;
-    margin-top: 3rem;
+    height: 60vh;
 }
 
-h1 {
+.left-side {
+    color: black;
+    background-image: url("../images/Welcome\ back\ background.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    width: 40%;
+}
+
+.login-form {
+    text-align: center;
+    background-color: white;
+    width: 40%;
+    align-content: center;
+}
+
+.form-title {
     margin-top: 0;
     text-align: center;
 }
@@ -29,3 +40,57 @@ button {
     padding: 0.5rem 0;
     cursor: pointer;
 }
+
+.login {
+    background-color: rgb(92, 138, 255);
+    color: whitesmoke;
+    width: 50%;
+    font-size: 1.5rem;
+    border-radius: 2.5rem;
+    border: 0;
+    transition: 0.1s ease-in-out;
+}
+
+.login:hover {
+    background-color: rgb(71, 120, 245);
+}
+
+.create-account {
+    background-color: rgb(232, 171, 56);
+    color: whitesmoke;
+    margin: 0 auto;
+    border-radius: 2.5rem;
+    padding: 0.5rem 2rem;
+    text-decoration: none;
+}
+
+.create-account:hover {
+    background-color: rgb(224, 157, 33);
+}
+
+.or {
+    position: relative;
+
+}
+
+.or:before{
+    content:" ";
+    height: 2px;
+    width: 130px;
+    background: black;
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 125px;
+  }
+
+  .or:after{
+    content:" ";
+    height: 2px;
+    width: 130px;
+    background: black;
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 125px;
+  }

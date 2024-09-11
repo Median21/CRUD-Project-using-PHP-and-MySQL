@@ -3,12 +3,14 @@
     align-items: center;
 }
 
-nav {
+
+.nav {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 70%;
+    width: 80%;
     margin: 0 auto;
+    position: relative;
 }
 
 .logo {
@@ -25,7 +27,7 @@ ul li {
     position: relative;
 }
 
-a {
+.nav a {
     display: block;
     padding: 1.4rem;
     color: black;
@@ -66,4 +68,50 @@ li:hover ul.dropdown {
 
 form {
     margin: 0;
+}
+
+.hamburger-menu {
+    border: 1px solid black;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    cursor: pointer;
+}
+
+.bar {
+    background-color: black;
+    width: 20px;
+    height: 3px;
+    margin-bottom: 2px;
+}
+
+.mobile-nav {
+    position: absolute;
+    border: 1px solid red;
+    display: none;
+    flex-direction: column;
+    background-color: orange;
+    width: 100%;
+}
+
+.mobile-nav.active {
+    display: none;
+}
+
+@media (max-width: 1020px) {
+    .desktop-nav {
+        display: none;
+    }
+
+    .hamburger-menu {
+        display: flex;
+    }
+
+    
+    .mobile-nav.active {
+        display: flex;
+        bottom: -370px;
+    }
 }

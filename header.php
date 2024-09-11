@@ -7,12 +7,12 @@
 ?>
 
 <header data-aos="fade-in">
-    <nav>
+    <nav class="nav">
         <div class="logo-name">
             <a href="index.php" class="logo-link"><img src="images/bakery-logo.jpg" alt="" class="logo"></a>
             <a href="index.php"><h1 class="business-name">BakeMaster</h1></a>
         </div>
-        <ul>
+        <ul class="desktop-nav">
             <li class="list-item"><a href="index.php">Home</a></li>
             <li class="list-item"><a href="index.php#menu">Menu</a></li>
             <li class="list-item"><a href="register.php">Sign up</a></li>
@@ -30,6 +30,21 @@
                 </ul>
             </li>
             <?php } ?>
+        </ul>
+
+        <div class="hamburger-menu">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+
+
+        <ul class="mobile-nav">
+            <li class="list-item"><a href="index.php">Home</a></li>
+            <li class="list-item"><a href="index.php#menu">Menu</a></li>
+            <li class="list-item"><a href="register.php">Sign up</a></li>
+            <li class="list-item"><a href="login.php">Login</a></li>
+            <li class="list-item"><a href="accounts.php">Accounts</a></li>
         </ul>
     </nav>
 </header>
