@@ -3,7 +3,6 @@
     align-items: center;
 }
 
-
 .nav {
     display: flex;
     align-items: center;
@@ -100,7 +99,12 @@ form {
     display: none;
 }
 
-@media (max-width: 1020px) {
+@media (max-width: 1179px) {
+    .business-name {
+        display: none;
+    }
+
+
     .desktop-nav {
         display: none;
     }

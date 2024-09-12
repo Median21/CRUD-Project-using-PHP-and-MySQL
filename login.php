@@ -63,7 +63,6 @@
 
         <form action="login.php" method="post" class="login-form">
             <?php if (empty($_SESSION)) {?>
-                <h1 class="form-title">Login</h1>
                 <input type="email" name="email" id="email" placeholder="Email" autocomplete="off">
                 <input type="password" name="password" id="password" placeholder="Password">
                 <button name="login" class="login">Login</button>
