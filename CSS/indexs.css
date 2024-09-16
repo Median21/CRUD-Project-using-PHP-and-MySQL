@@ -81,9 +81,13 @@ button {
     margin-top: 0;
 }
 
-#view-more-btn {
+#view-more {
     font-size: 1.5rem;
     padding: 0.5rem;
+    text-decoration: none;
+    background-color: white;
+    color: black;
+    border: 1px solid black;
 }
 
 .top-menu {

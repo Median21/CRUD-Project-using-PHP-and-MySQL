@@ -16,6 +16,7 @@
             <li class="list-item"><a href="index.php">Home</a></li>
             <li class="list-item"><a href="menu.php">Menu</a></li>
             <li class="list-item"><a href="add-product.php">Add</a></li>
+            <li class="list-item"><a href="cart.php">Cart</a></li>
             <li class="list-item"><a href="register.php">Sign up</a></li>
             <li class="list-item"><a href="login.php">Login</a></li>
             <li class="list-item"><a href="accounts.php">Accounts</a></li>

@@ -44,7 +44,7 @@
             <div class="section-title">
                 <h2>Our Top Menu</h2>
                 <p>Our most ordered product!</p>
-                <button id="view-more-btn">View More</button>
+                <a href="menu.php" id="view-more">View More</a>
             </div>
 
             <div class="top-menu">

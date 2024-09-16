@@ -1,0 +1,17 @@
+body {
+    display: flex;
+}
+
+.cart-container {
+    background-color: rgb(216, 209, 195);
+    height: 80vh;
+
+    justify-content: center;
+    width: 80%;
+    margin: 0 auto;
+}
+
+
+th {
+    border: 1px solid black;
+}
