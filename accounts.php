@@ -69,10 +69,8 @@
         <h2>No Users</h2>
     <?php } ?>
 
+    <?php include("footer.html"); ?>
     
-    <script>
-        //Logout
-        document.getElementById("logout-dropdown").addEventListener("click", () => {document.querySelector("form").submit();})
-    </script>
+    <script src="JS/global.js"></script>
 </body>
 </html>

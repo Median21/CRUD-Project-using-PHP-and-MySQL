@@ -1,6 +1,2 @@
-NEXT TASK:
-Add prefixes to IDs
-- Product ID (P0001)
-- User ID (Default)
-- Shopping_cart cart_id (SC0001)
-- Cart Item ID (SCCI0001) 
+CURRENT TASK:
+1. Finish cart

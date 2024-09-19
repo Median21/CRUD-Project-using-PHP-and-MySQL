@@ -2,12 +2,22 @@ main {
     background-color: white;
     display: grid;
     /* grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); */
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(250px, 400px));
     gap: 2rem;
     width: 80%;
     margin: 0 auto;
     padding: 2rem;
     border-radius: 20px;
+    align-items: baseline;
+    justify-content: center;
+}
+
+h3 {
+    text-align: center;
+}
+
+.menu-title {
+    text-align: center;
 }
 
 .menu-container img {
@@ -24,6 +34,7 @@ main {
     flex-direction: column;
     justify-content: space-around;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    height: 100%;
 }
 
 .image-container {
@@ -71,4 +82,51 @@ main {
 
 .add-btn:hover {
     background-color: rgb(221, 145, 4);
+}
+
+
+.popup-container {
+    display: none;
+    position: fixed;
+    border: 1px solid black;;
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    height: 100%;
+    width: 100%;
+}
+
+.popup {
+    background-color: white;
+    font-size: 1rem;
+    text-align: center;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 5rem 2rem;
+    width: 50%;
+    margin: 15% auto;
+    z-index: 999;
+}
+
+.login-link {
+    border: 1px solid black;
+    font-size: 1.5rem;
+    padding: 0.5rem 2rem;
+    background-color: white;
+    color: black;
+}
+
+.login-link:hover {
+    background-color: black;
+    color: white;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;;
+}
+
+.close:hover {
+    color: black;
 }

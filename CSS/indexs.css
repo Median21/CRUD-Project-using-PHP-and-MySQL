@@ -10,12 +10,12 @@ main {
     background-color: peachpuff;
     padding: 2rem;
     flex-wrap: wrap;
+    height: 80vh;
 }
 
 .left-hero {
     width: 60%;;
     padding: 3rem 2rem;
-    border-radius: 100px;
 }
 
 .left-hero h1 {
@@ -62,7 +62,6 @@ button {
 }
 
 .menu-section {
-    border: 1px solid red;
     padding: 2rem 0 4rem 0;
 }
 
@@ -117,32 +116,39 @@ button {
 }
 
 @media (max-width: 900px) {
+    :root {
+        font-size: 0.9rem
+    }
+
     main {
         width: 100%;
     }
 
     .hero {
         flex-direction: column;
+        justify-content: center;
+        font-size: 0.2rem;
+    }
+
+    .left-hero {
+        width: 100%;
     }
 
     .left-hero, .right-hero {
         padding: 0;
-        width: 100%;
         text-align: center;
     }
 
     .hero-img {
         border-radius: 0;
-        width: 50%;
+        display: none;
     }
 
     .explore-btn {
         margin-bottom: 2rem;
     }
     
-    .top-menu {
-        flex-direction: column;
-    }
+    
 
     .food-container {
         margin-bottom: 2rem;

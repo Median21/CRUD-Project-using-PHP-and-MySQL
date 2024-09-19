@@ -59,13 +59,15 @@
     <?php include("header.php") ?>
 
     <div class="flex-container">
-        <div class="left-side"></div>
+        <div class="left-side">
+
+        </div>
 
         <form action="login.php" method="post" class="login-form">
             <?php if (empty($_SESSION)) {?>
-                <input type="email" name="email" id="email" placeholder="Email" autocomplete="off">
-                <input type="password" name="password" id="password" placeholder="Password">
-                <button name="login" class="login">Login</button>
+                <input type="email" name="email" id="email" placeholder="Email" autocomplete="off" autofocus required>
+                <input type="password" name="password" id="password" placeholder="Password" required>
+                <button name="login" class="login">LOGIN</button>
                 <p class="or">OR</p>
                 <a href="register.php" class="create-account">Create an account</a>
             <?php } else {?>
@@ -77,9 +79,6 @@
 
 
     
-    <script>
-        //Logout
-        document.getElementById("logout-dropdown").addEventListener("click", () => {document.querySelector("form").submit();})
-    </script>
+    <script src="JS/global.js"></script>
 </body>
 </html>

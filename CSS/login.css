@@ -1,7 +1,7 @@
 .flex-container {
     display: flex;
     justify-content: center;
-    width: 70%;
+    width: 100%;
     margin: 0 auto;
     height: 60vh;
 }
@@ -17,23 +17,45 @@
 
 .login-form {
     text-align: center;
-    background-color: white;
+    border: 1px solid black;
     width: 40%;
     align-content: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    /* Copied CSS */
+background: rgba( 255, 255, 255, 0.3 );
+box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+backdrop-filter: blur( 9px );
+-webkit-backdrop-filter: blur( 9px );
+
+border: 1px solid rgba( 255, 255, 255, 0.18 );
 }
 
 .form-title {
     margin-top: 0;
     text-align: center;
 }
+
 input {
     margin-bottom:0.8rem;
     font-size: inherit;
     padding: 0.5rem;
 }
 
-input, button {
+input:focus {
+    transition: 0.2s ease-in-out;
+    transform: scale(1.1);
+}
+
+button {
     width: 50%;
+}
+
+input {
+    width: 47%;
 }
 
 button {
@@ -60,7 +82,7 @@ button {
     color: whitesmoke;
     margin: 0 auto;
     border-radius: 2.5rem;
-    padding: 0.5rem 2rem;
+    padding: 0.5rem 3rem;
     text-decoration: none;
 }
 
@@ -73,24 +95,21 @@ button {
 
 }
 
-.or:before{
-    content:" ";
-    height: 2px;
-    width: 130px;
-    background: black;
-    display: block;
-    position: absolute;
-    top: 50%;
-    left: 125px;
-  }
 
-  .or:after{
-    content:" ";
-    height: 2px;
-    width: 130px;
-    background: black;
-    display: block;
-    position: absolute;
-    top: 50%;
-    right: 125px;
-  }
+@media (max-width: 950px) {
+    .flex-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .left-side {
+        height: 100%;
+        width: 80%;
+    }
+
+
+    .login-form {
+        padding: 2rem 0;
+        width: 80%;
+    }
+}

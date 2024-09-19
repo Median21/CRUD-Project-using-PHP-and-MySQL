@@ -2,11 +2,11 @@
     include("connection.php");
     session_start();
 
-    if (empty($_SESSION)) {
+    /* if (empty($_SESSION)) {
         echo "Not Logged in";
     } else {
         echo "Logged in";
-    }
+    } */
 ?>
 
 <!DOCTYPE html>
@@ -19,6 +19,10 @@
     <link rel="stylesheet" href="CSS/indexs.css">
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Lobster&display=swap" rel="stylesheet">
@@ -80,21 +84,17 @@
     <?php include("footer.html") ?>
 
 
-
+    <script src="JS/global.js"></script>
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-  <script>
-    AOS.init();
-  </script>
-
     <script>
-        document.querySelector(".hamburger-menu").addEventListener("click", () => {
-            document.querySelector(".mobile-nav").classList.toggle("active");
-            console.log("TEST")
-        })
-
-        document.getElementById("logout-dropdown").addEventListener("click", () => {
-            document.querySelector("form").submit();
-        })
+        AOS.init();
     </script>
+
+<script>
+    document.getElementById("logout-dropdown").addEventListener("click", () => {
+    document.querySelector(".logout-form").submit();
+    console.log("test")
+})
+</script>
 </body>
 </html>

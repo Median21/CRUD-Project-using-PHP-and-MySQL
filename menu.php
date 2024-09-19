@@ -2,6 +2,15 @@
     include("connection.php");
     session_start();
 
+    
+
+    if (empty($_SESSION["id"])) {
+        $user_id = null;
+    } else {
+        $user_id = $_SESSION["id"];
+    }
+
+    
     $result = null;
 
     try {
@@ -13,28 +22,29 @@
         
     }
 
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $user_id = $_SESSION["id"];
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["add-to-cart"]) && !empty($_SESSION["id"])) {
         $product_id = $_POST["add-to-cart"];
 
-
         try {
-            //Find cart_id and product_id
+            //Find shopping card record
             $find_cart_id = $db->query("SELECT * FROM shopping_cart WHERE user_id = '$user_id'");
             $find_cart_id->execute();
 
-            if ($find_cart_id->rowCount() == 0) {
-                //Add shopping_cart row for the user
-                $user_cart = $db->query("INSERT INTO shopping_cart (user_id)
-                VALUES ($user_id)");
-                $user_cart->execute();
+            if ($find_cart_id->rowCount() == 0) { //No shopping chart
+                //Add shopping_cart record for the user
                 echo "No cart found, adding shopping_cart record";
-            } else {
-                echo "Already have shopping cart record";
-                $cart_id = $find_cart_id->fetch();
-                $cart_id = $cart_id["cart_id"];
+                $user_cart = $db->query("INSERT INTO shopping_cart (user_id)
+                                         VALUES ($user_id)");
+        
             }
+            echo "Before";
 
+            $final_find_cart_id = $db->query("SELECT * FROM shopping_cart WHERE user_id = '$user_id'");
+            $final_find_cart_id->execute();
+
+            $cart_id = $final_find_cart_id->fetch();
+            $cart_id = $cart_id["cart_id"];
+            echo "After";
             //Check if there is an existing cart_id and product_id
             $cart_and_product = $db->query("SELECT * FROM cart_item WHERE cart_id = '$cart_id' AND product_id = '$product_id'");
             $cart_and_product->execute();
@@ -43,7 +53,7 @@
                 echo "ADDING TO CART...";
                 //For cart_item TABLE (ADD new cart_item ROW)
                 $cart_item = $db->prepare("INSERT INTO cart_item (cart_id, product_id, quantity)
-                VALUES (:cart_id, :product_id, :quantity)");
+                                           VALUES (:cart_id, :product_id, :quantity)");
                 $cart_item->bindValue(":cart_id", $cart_id);
                 $cart_item->bindValue(":product_id", $product_id);
                 $cart_item->bindValue(":quantity", 1);
@@ -62,8 +72,11 @@
 
         } catch (PDOException $e) {
            echo $e->getMessage();
+           echo "test"; 
         }
     }
+
+    $test = "Hello";
 
 ?>
 
@@ -84,8 +97,9 @@
 </head>
 <body>
     <?php include("header.php") ?>
-    <a href="cart.php">CART</a>
-    <form action="menu.php" method="post">
+
+    <h2 class="menu-title">MENU</h2>
+    <form action="menu.php" method="post" class="add-to-cart-form">
         <main>
                 <?php if (!empty($result)) {?>
                 <?php foreach ($result as $product) {?>
@@ -98,6 +112,7 @@
                             <h2 class="product-name"><?= $product["name"] ?></h2>
                     
                             <h3 class="price">₱<?= $product["price"] ?></h3>
+                            <p class="description"><?= $product["description"] ?></p>
                         </div>
 
                         <div>
@@ -111,5 +126,65 @@
                 <?php } ?>
         </main>
     </form>
+
+    <div class="popup-container">
+        <div class="popup">
+            <span class="close">&times;</span>
+            <h2>Please login or create an account to add items to your cart.</h2>
+            <a href="login.php" class="login-link">Login</a>
+        </div>
+    </div>
+
+
+    <?php include("footer.html"); ?>
+
+    <script src="JS/global.js"></script>
+
+    <script>
+        let addBtns = document.querySelectorAll(".add-btn");
+        let popupContainer = document.querySelector(".popup-container");
+        let popup = document.querySelector(".popup");
+        let closeSymbol = document.querySelector(".close")
+
+        let form = document.querySelector(".add-to-cart-form");
+        
+
+        addBtns.forEach(btn => {
+            btn.addEventListener("click", (event) => {
+                <?php if (empty($user_id)) {?>
+                    event.preventDefault();
+                    console.log("Not logged in");
+                    popupContainer.style.display = "block";
+                <?php } ?>
+            })
+        })
+
+            popupContainer.addEventListener("click", (e) => {
+                popupContainer.style.display = "none";
+                e.stopPropagation();
+       
+            })
+
+            /* document.body.addEventListener("click", (e) => {
+                console.log("Current Target : " , e.currentTarget);
+                console.log("Target: " , e.target);
+
+
+                if (e.target.classList.contains("popup-container")) {
+                    popupContainer.style.display = "none";
+                }
+            }) */
+
+    
+
+
+
+        closeSymbol.addEventListener("click", (e) => {
+            popupContainer.style.display = "none";
+        })
+
+        
+
+    </script>
 </body>
 </html>

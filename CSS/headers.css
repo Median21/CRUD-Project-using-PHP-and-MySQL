@@ -3,12 +3,18 @@
     align-items: center;
 }
 
+.business-name {
+    color: black;
+    margin-left: 1rem;
+}
+
+
 .nav {
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 80%;
-    margin: 0 auto;
+    margin: 1rem auto;
     position: relative;
 }
 
@@ -24,9 +30,14 @@ ul {
 ul li {
     display: inline-block;
     position: relative;
+   
 }
 
-.nav a {
+a {
+    text-decoration: none;
+}
+
+.nav ul a {
     display: block;
     padding: 1.4rem;
     color: black;
@@ -88,11 +99,11 @@ form {
 
 .mobile-nav {
     position: absolute;
-    border: 1px solid red;
     display: none;
     flex-direction: column;
     background-color: orange;
     width: 100%;
+    z-index: 2;
 }
 
 .mobile-nav.active {
@@ -113,9 +124,12 @@ form {
         display: flex;
     }
 
-    
+    ul li {
+        width: 100%;
+    }
+
     .mobile-nav.active {
         display: flex;
-        bottom: -370px;
+        top: 75%
     }
 }

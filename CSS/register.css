@@ -40,3 +40,10 @@ button {
 button:hover {
     background: radial-gradient(circle, rgba(247,246,108,1) 0%, rgba(217,249,82,1) 100%);
 }
+
+
+@media (max-width: 950px) {
+    .register-form {
+        width: 80%;
+    }
+}

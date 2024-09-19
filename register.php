@@ -19,11 +19,6 @@
         }
     }
 
-    if (empty($_SESSION)) {
-        echo "Not Logged in";
-    } else {
-        echo "Logged in";
-    }
 ?>
 
 <!DOCTYPE html>
@@ -48,16 +43,15 @@
                 <button>SIGN UP</button>
                 <?php
             if (!empty($result)) {
-                echo "<p>$result</p>";
+                echo "<p style=text-align:center>$result</p>";
             }
             ?>
             </div>
 
         </form>
 
-    <script>
-        //Logout
-        document.getElementById("logout-dropdown").addEventListener("click", () => {document.querySelector("form").submit();})
-    </script>
+    <?php include("footer.html"); ?>
+
+        <script src="JS/global.js"></script>
 </body>
 </html>

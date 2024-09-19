@@ -2,16 +2,56 @@ body {
     display: flex;
 }
 
+.your-cart {
+    margin-top: 0;
+}
+
 .cart-container {
     background-color: rgb(216, 209, 195);
-    height: 80vh;
-
+    text-align: center;
     justify-content: center;
     width: 80%;
     margin: 0 auto;
+    padding: 2rem 0 3rem 0;
 }
 
+table {
+    text-align: center;
+    width: 70%;
+    border-spacing: 0;
+    margin: 0 auto;
+}
 
 th {
-    border: 1px solid black;
+    padding: 1rem 0;
+    font-size: 1.5rem;
+}
+
+td {
+
+    font-size: 1rem;
+}
+
+.product-image {
+    width: 150px;
+}
+
+.image-col {
+    width: 2%;
+}
+
+.name-col {
+    width: 10%;
+}
+
+.qty-col {
+    width: 5%;
+}
+
+.price-col {
+    width: 5%;
+}
+
+.total-col {
+    width: 10%;
 }
