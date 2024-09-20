@@ -153,13 +153,7 @@
         })
             
         
-        window.addEventListener("keydown", (e) => {
-            if (e.key == "Control") {
-                document.querySelector(".manage-products").classList.toggle("shorten");
-                document.querySelector(".add-container").classList.toggle("show-form");
-            }
-            console.log(e.key)
-        })
+    
 
 
 

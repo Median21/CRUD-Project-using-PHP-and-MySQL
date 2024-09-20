@@ -14,6 +14,7 @@
             $stmt->bindValue(":password", $password);
             $stmt->execute();
             $result = "User has been registered";
+            header("Location: login.php");
         } catch(PDOException) {
             $result = "User can't be registered";
         }
@@ -50,6 +51,7 @@
 
         </form>
 
+        
     <?php include("footer.html"); ?>
 
         <script src="JS/global.js"></script>

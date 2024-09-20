@@ -11,6 +11,7 @@
         
         $status = "Test";
 
+
         try {
             //Create an order record
             $new_order = $db->prepare("INSERT INTO orders (user_id, order_date)
