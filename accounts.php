@@ -42,7 +42,7 @@
     <link rel="stylesheet" href="CSS/global.css">
     <link rel="stylesheet" href="CSS/headers.css">
     <link rel="stylesheet" href="CSS/accounts.css">
-    <title>Accounts</title>
+    <title>BakeMaster | Accounts</title>
 </head>
 <body>
     <?php include("header.php") ?>

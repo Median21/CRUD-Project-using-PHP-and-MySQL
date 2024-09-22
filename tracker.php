@@ -10,14 +10,13 @@
             $stmt->bindParam(":order_id", $_GET["tracker"]);
             $stmt->execute();
     
-            while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                $result = $row["status"];
+            if ($stmt->rowCount() > 0) {
+                while($row = $stmt->fetch(PDO::FETCH_ASSOC))
+                    $result = $row["status"];
+            } else {
+                $result = "Invalid order number";
             }
-        
-            
-    
-    
-    
+
         } catch (PDOException $e) {
             echo $e->getMessage();
         }

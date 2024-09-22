@@ -30,7 +30,7 @@
     <link rel="stylesheet" href="CSS/global.css">
     <link rel="stylesheet" href="CSS/headers.css">
     <link rel="stylesheet" href="CSS/register.css">
-    <title>Bakery Shop | Register</title>
+    <title>BakeMaster | Register</title>
 </head>
 <body>
     <?php include("header.php") ?>

@@ -1,8 +1,7 @@
 main {
-    background-color: white;
     display: grid;
     /* grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); */
-    grid-template-columns: repeat(auto-fit, minmax(250px, 400px));
+    grid-template-columns: repeat(auto-fit, minmax(250px, 350px));
     gap: 2rem;
     width: 80%;
     margin: 0 auto;
@@ -34,6 +33,7 @@ h3 {
     flex-direction: column;
     justify-content: space-around;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    background-color: white;
     height: 100%;
 }
 

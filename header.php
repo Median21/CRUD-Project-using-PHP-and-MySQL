@@ -16,8 +16,9 @@
         <ul class="desktop-nav">
             <li class="list-item"><a href="index.php">Home</a></li>
             <li class="list-item"><a href="menu.php">Menu</a></li>
-            <li class="list-item"><a href="register.php">Sign up</a></li>
+           
             <?php if (!$logged_in) { ?>
+                <li class="list-item"><a href="register.php">Sign up</a></li>
                 <li class="list-item"><a href="login.php">Login</a></li>
             <?php } ?>
             <?php if ($logged_in) { ?>
@@ -25,6 +26,7 @@
                 <li class="list-item">
                     <a href="cart.php">Cart <i class="fa fa-shopping-cart"></i></a>
                 </li>
+                <li class="list-item"><a href="orders.php">Orders</a></li>
                 <li class="list-item"><a href="accounts.php">Accounts</a></li>
                 <li class="list-item" class="dropdown-list"><a>More &#x25BE;</a>
                 <ul class="dropdown">
@@ -59,6 +61,8 @@
                 </li>
 
                 <li class="list-item"><a href="add-product.php">Add</a></li>
+
+                <li class="list-item"><a href="orders.php">Orders</a></li>
 
                 <form action="./login.php" method="post" class="logout-form">
                     <li class="list-item">

@@ -26,8 +26,34 @@
 
             $cartID_from_shoppingcart = $user_id_from_cart->fetch(PDO::FETCH_ASSOC);
 
+            
+            //Gets the latest order of the user to get the order_id
+            $get_latest_order = $db->query("SELECT * FROM `orders` WHERE user_id = {$_SESSION["id"]} ORDER BY `order_date` DESC LIMIT 1");
+            $get_latest_order->execute();
 
-            //Clear shopping cart
+            if ($get_latest_order->rowCount() > 0) {
+                $latest_order = $get_latest_order->fetch(PDO::FETCH_ASSOC);
+            }
+
+            echo $latest_order["order_id"];
+    
+            //Gets user_id from shopping cart
+            $get_cart_id_from_sc = $db->query("SELECT cart_id FROM shopping_cart WHERE user_id = {$_SESSION['id']}");
+            $get_cart_id_from_sc->execute();
+
+            $cart_id_sc = $get_cart_id_from_sc->fetch();
+            $cart_id_sc = $cart_id_sc["cart_id"];
+            
+
+            $copy_cart_item = $db->prepare("INSERT INTO order_details (user_id, order_id, product_id, quantity) SELECT :user_id, :order_id, product_id, quantity FROM cart_item WHERE cart_id = :cartID_sc");
+
+            $copy_cart_item->bindParam(":user_id", $_SESSION["id"]);
+            $copy_cart_item->bindParam(":order_id", $latest_order["order_id"]);
+            $copy_cart_item->bindParam(":cartID_sc", $cart_id_sc);
+            $copy_cart_item->execute();
+
+
+            //Clear cart_item
             $clear_cart_item = $db->prepare("DELETE FROM cart_item WHERE cart_id = :cart_id");
             $clear_cart_item->bindParam(":cart_id", $cartID_from_shoppingcart["cart_id"]);
             $clear_cart_item->execute();
@@ -38,6 +64,7 @@
     }
 
 
+    //Shows cart items of User
     try {
         $user_id = $_SESSION["id"];
 
@@ -57,11 +84,6 @@
     } catch (PDOException $e) {
         echo $e->getMessage();
     }
-
-    
-
-
-
 ?>
 
 <!DOCTYPE html>
@@ -73,7 +95,7 @@
     <link rel="stylesheet" href="CSS/headers.css">
     <link rel="stylesheet" href="CSS/cart.css">
 
-    <title>Cart | BakeMaster</title>
+    <title>BakeMaster | Cart</title>
 </head>
 <body>
     <?php include("header.php"); ?>

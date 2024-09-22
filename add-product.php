@@ -61,7 +61,7 @@
     <link rel="stylesheet" href="CSS/global.css">
     <link rel="stylesheet" href="CSS/headers.css">
     <link rel="stylesheet" href="CSS/add-product.css">
-    <title>Menu</title>
+    <title>Add Products | BakeMaster</title>
 </head>
 <body>
     <?php include("header.php") ?>
