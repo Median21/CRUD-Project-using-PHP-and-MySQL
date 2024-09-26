@@ -7,7 +7,7 @@ main {
     margin: 0 auto;
     padding: 2rem;
     border-radius: 20px;
-    align-items: baseline;
+
     justify-content: center;
 }
 
@@ -17,6 +17,7 @@ h3 {
 
 .menu-title {
     text-align: center;
+    margin-bottom: 0;
 }
 
 .menu-container img {
@@ -129,4 +130,14 @@ h3 {
 
 .close:hover {
     color: black;
+}
+
+#filter {
+    width: 280px;
+    border-radius: 20px;
+    padding: 0.8rem 1rem;
+    border: 1px solid black;
+    margin-left: auto;
+    font-size: 1.2rem;
+    margin-right: 2rem;
 }

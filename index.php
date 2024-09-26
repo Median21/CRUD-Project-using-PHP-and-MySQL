@@ -1,6 +1,18 @@
 <?php
     include("connection.php");
     session_start();
+
+  /*   $best_sellers = $db->query("SELECT product_id, SUM(quantity) FROM order_details GROUP BY product_id ORDER BY SUM(quantity) DESC LIMIT 3"); */
+
+    
+        $best_sellers = $db->query("SELECT order_details.product_id, SUM(quantity), product.name, product.price, product.image FROM order_details INNER JOIN product ON order_details.product_id = product.product_id GROUP BY product_id ORDER BY SUM(quantity) DESC LIMIT 3");
+
+        $best_sellers->execute();
+ 
+
+   
+
+
 ?>
 
 <!DOCTYPE html>
@@ -24,7 +36,6 @@
 </head>
 <body>
     <?php include("header.php") ?>
-
     <main>
         <section class="hero" data-aos="fade-up">
             <div class="left-hero">
@@ -34,7 +45,7 @@
             </div>
 
             <div class="right-hero">
-                <img src="./images/hero-image.jpg" alt="" class="hero-img">
+                <img src="./images/hero-image.jpg" alt="Slice of cake" class="hero-img">
             </div>
         </section>
         
@@ -46,6 +57,19 @@
             </div>
 
             <div class="top-menu">
+
+            <?php if ($best_sellers) { ?>
+                <?php foreach($best_sellers as $best_seller) { ?>
+                <div class="food-container">
+                    <img src=products/<?= $best_seller["image"] ?> alt="a">
+                        <h3> <?= $best_seller["name"] ?> </h3>
+                        <p>Sold: <?= $best_seller["SUM(quantity)"] ?> </p>
+                        <p>₱<?= $best_seller["price"] ?></p>
+                        <button class="add-to-cart-btn">Add to cart</button>
+                    </div>
+                <?php } ?>
+
+            <?php } else { ?>
                 <div class="food-container">
                     <img src="images/Menu/image-meringue-desktop.jpg" alt="">
                     <h3>Food 1</h3>
@@ -70,7 +94,7 @@
                     <button class="add-to-cart-btn">Add to cart</button>
                 </div>
             </div>
-            
+            <?php } ?>
         </section>   
 
 

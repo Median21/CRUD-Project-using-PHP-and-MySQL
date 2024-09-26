@@ -1,9 +1,25 @@
 <?php
+    include("connection.php");
+
     if (empty($_SESSION)) {
         $logged_in = false;
     } else {
         $logged_in = true;
+
+        try {
+            $cart_quantity = $db->prepare("SELECT shopping_cart.user_id, SUM(quantity) FROM cart_item INNER JOIN shopping_cart ON cart_item.cart_id = shopping_cart.cart_id WHERE user_id = :id");
+            $cart_quantity->bindParam("id", $_SESSION["id"]);
+            $cart_quantity->execute();
+    
+            $cart_qty = $cart_quantity->fetch();
+    
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
     }
+
+
+   
 ?>
 
 <header data-aos="fade-in">
@@ -24,7 +40,10 @@
             <?php if ($logged_in) { ?>
                 <li class="list-item"><a href="add-product.php">Add</a></li>
                 <li class="list-item">
-                    <a href="cart.php">Cart <i class="fa fa-shopping-cart"></i></a>
+                    <a href="cart.php">Cart
+                        <i class="fa fa-shopping-cart"></i>
+                        (<?= $cart_qty["SUM(quantity)"]?>)
+                    </a>
                 </li>
                 <li class="list-item"><a href="orders.php">Orders</a></li>
                 <li class="list-item"><a href="accounts.php">Accounts</a></li>
@@ -41,8 +60,6 @@
             <?php } ?>
         </ul>
 
-    
- 
         <div class="hamburger-menu">
             <div class="bar"></div>
             <div class="bar"></div>
@@ -57,6 +74,7 @@
                 <li class="list-item">
                     <a href="cart.php">Cart
                         <i class="fa fa-shopping-cart"></i>
+                        (<?= $cart_qty["SUM(quantity)"]?>)
                     </a>
                 </li>
 
