@@ -137,4 +137,8 @@ form {
         display: flex;
         top: 75%
     }
+
+    .nav {
+        width: 100%;
+    }
 }

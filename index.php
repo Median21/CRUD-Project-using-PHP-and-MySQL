@@ -110,9 +110,9 @@
 
 <script>
     document.getElementById("logout-dropdown").addEventListener("click", () => {
-    document.querySelector(".logout-form").submit();
-    console.log("test")
-})
+        document.querySelector(".logout-form").submit();
+        console.log("test")
+    })
 </script>
 </body>
 </html>
