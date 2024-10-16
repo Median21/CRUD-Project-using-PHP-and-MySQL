@@ -32,6 +32,11 @@
     $stmt->execute();
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
+    $get_email = $db->query("SELECT email, verified FROM user WHERE id =  {$_SESSION["id"]}");
+    $get_email->execute();
+    $fetch_email = $get_email->fetch(PDO::FETCH_ASSOC);
+
+    echo $fetch_email["email"];
     
 ?>
 
@@ -43,12 +48,27 @@
     <link rel="stylesheet" href="CSS/global.css">
     <link rel="stylesheet" href="CSS/headers.css">
     <link rel="stylesheet" href="CSS/profile.css">
+
+    <script src="https://kit.fontawesome.com/b0d1390b7c.js" crossorigin="anonymous"></script>
     <title>BakeMaster | Profile</title>
 </head>
 <body>
     <?php include("header.php"); ?>
     <form action="profile.php" method="post" class="profile-form">
 <!--         <h1 class="form-title">Personal Information</h1> -->
+
+            <!-- <label for="verified">
+                Verified
+            </label> -->
+
+            <label for="email">
+                Email verified: <?= $fetch_email["verified"] ? 
+                '<i class="fa-regular fa-circle-check" style="color: #63E6BE;"></i>'
+                : 
+                '<i class="fa-regular fa-circle-xmark" style="color: #d72d2d;"></i>' ?>
+                <input type="email" name="email" id="email" value="<?= $fetch_email["email"] ?>"  <?= $fetch_email["verified"] ? "disabled" : ""?> >
+            </label>
+
             <label for="first-name">First name:
             <input type="text" name="first-name" id="first-name" placeholder="First name" value=<?php echo ($row ? $row["first_name"] : "") ?> >
             </label>

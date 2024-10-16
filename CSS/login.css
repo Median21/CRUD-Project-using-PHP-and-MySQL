@@ -24,7 +24,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
+    border-radius: 10px;
         /* Copied CSS */
     background: rgba( 255, 255, 255, 0.3 );
     box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
@@ -41,7 +41,8 @@
 input {
     margin-bottom:0.8rem;
     font-size: inherit;
-    padding: 0.5rem;
+    padding: 0.5rem 1rem;
+    border: 1px solid black;
 }
 
 input:focus {
@@ -83,6 +84,7 @@ button {
     border-radius: 2.5rem;
     padding: 0.5rem 3rem;
     text-decoration: none;
+    width: 50%;
 }
 
 .create-account:hover {

@@ -11,10 +11,14 @@
             if ($stmt->rowCount() > 0) {
                 while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
-                    if (password_verify($_POST["password"], $row["password"])) {
+                    if (password_verify($_POST["password"], $row["password"]) && $row["type"] == "Customer") {
                         $_SESSION["id"] = $row["id"];
                         $_SESSION["email"] = $_POST["email"];
                         header("Location: index.php");
+                    } elseif (password_verify($_POST["password"], $row["password"]) && $row["type"] == "Admin") {
+                        $_SESSION["id"] = $row["id"];
+                        $_SESSION["email"] = $_POST["email"];
+                        header("Location: admin-dashboard.php");
                     } else {
                         echo "Incorrect credentials <br>";
                     }
@@ -59,9 +63,9 @@
     <?php include("header.php") ?>
 
     <div class="flex-container">
-        <div class="left-side">
+       <!--  <div class="left-side">
 
-        </div>
+        </div> -->
 
         <form action="login.php" method="post" class="login-form">
             <?php if (empty($_SESSION)) {?>

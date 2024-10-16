@@ -77,8 +77,51 @@
 
             $user_cart_item = $db->query("SELECT * FROM cart_item WHERE cart_id = '$cart_id'");
             $user_cart_item->execute();
-            $cart_item_product_join = $db->query("SELECT shopping_cart.user_id, cart_item.quantity, product.name, product.price, product.image FROM cart_item INNER JOIN product ON cart_item.product_id=product.product_id INNER JOIN shopping_cart ON shopping_cart.cart_id=cart_item.cart_id WHERE shopping_cart.user_id = '$user_id'");
+            $cart_item_product_join = $db->query(
+                "SELECT 
+                    shopping_cart.user_id,
+                    cart_item.quantity,
+                    product.name,
+                    product.price,
+                    product.image,
+                    cart_item.quantity * product.price AS sub_total
+                FROM 
+                    cart_item
+                INNER JOIN 
+                    product ON cart_item.product_id=product.product_id 
+                INNER JOIN
+                    shopping_cart ON shopping_cart.cart_id=cart_item.cart_id
+                WHERE
+                    shopping_cart.user_id = '$user_id'
+                ");
             $cart_item_product_join->execute();
+
+
+
+            $calculate_grand_total = $db->query(
+                "SELECT 
+                    shopping_cart.user_id,
+                    cart_item.quantity,
+                    product.name,
+                    product.price,
+                    product.image,
+                    SUM(cart_item.quantity * product.price) AS grand_total,
+                    cart_item.quantity * product.price AS sub_total
+                FROM 
+                    cart_item
+                INNER JOIN 
+                    product ON cart_item.product_id=product.product_id 
+                INNER JOIN
+                    shopping_cart ON shopping_cart.cart_id=cart_item.cart_id
+                WHERE
+                    shopping_cart.user_id = '$user_id'
+                ");
+
+            $calculate_grand_total->execute();
+
+            $grand_total = $calculate_grand_total->fetch(PDO::FETCH_ASSOC);
+            $grand_total = $grand_total["grand_total"];
+
         }
     
     } catch (PDOException $e) {
@@ -114,18 +157,22 @@
             </tr>
 
             <?php if ($user_shopping_cart->rowCount() > 0) { ?>
+                <form action="cart.php" method="post">
+                    <button name="checkout">CHECKOUT</button>
+                </form>
+
                 <?php while($cart_item = $cart_item_product_join->fetch(PDO::FETCH_ASSOC)) {?>
                     <tr>
                         <td><img class="product-image" src="products/<?= $cart_item["image"]?>" alt="<? $cart_item['name'] ?>"></td>
                         <td><?= $cart_item["name"] ?></td>
                         <td><?= $cart_item["quantity"] ?></td>
                         <td><?= $cart_item["price"] ?></td>
+                        <td><?= $cart_item["sub_total"] ?></td>
                     </tr>
                 <?php } ?>
                 
-                <form action="cart.php" method="post">
-                    <button name="checkout">CHECKOUT</button>
-                </form>
+                <h1>Grand Total: <?= $grand_total ?></h1>
+                
 
             <?php } else { ?>
                     <p>Cart is empty</p>

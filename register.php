@@ -2,20 +2,74 @@
     include("connection.php");
     session_start();
 
-    $result = "";
+    use PHPMailer\PHPMailer\PHPMailer;
+    use PHPMailer\PHPMailer\Exception;
 
+    require 'phpmailer/src/Exception.php';
+    require 'phpmailer/src/PHPMailer.php';
+    require 'phpmailer/src/SMTP.php';
+
+    require __DIR__ . '/vendor/autoload.php';
+
+    $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/');
+    $dotenv->load();
+
+    $result = "";
+    
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+        function random_code() {
+            return rand(0,999999);
+        }
+
+        $random_code = random_code();
+
         try {
             $email = $_POST["email"];
             $password = password_hash($_POST["password"], PASSWORD_DEFAULT);
-            $stmt = $db->prepare("INSERT INTO user (email, password)
-                                  VALUES (:email, :password)");
+            $type = $_POST["type"];
+
+            $stmt = $db->prepare("INSERT INTO user (email, password, type, code)
+                                  VALUES (:email, :password, :type, :code)");
             $stmt->bindValue(":email", $email);
             $stmt->bindValue(":password", $password);
+            $stmt->bindValue(":type", $type);
+            $stmt->bindValue(":code", $random_code);
             $stmt->execute();
-            $result = "User has been registered";
-            header("Location: login.php");
-        } catch(PDOException) {
+            $result = "User has been registered <br> An email verification has been sent to your email";
+ 
+
+            $mail = new PHPMailer(true);
+    
+            $mail->isSMTP();
+            $mail->Host = 'smtp.gmail.com';
+            $mail->SMTPAuth = true;
+            $mail->Username = $_ENV["GMAIL_EMAIL"];
+            $mail->Password = $_ENV["APP_PASS"];
+            $mail->SMTPSecure = "ssl";
+            $mail->Port = 465;
+    
+            $mail->setFrom($_ENV["GMAIL_EMAIL"]);
+    
+            $mail->addAddress($email);
+    
+            $mail->isHTML(true);
+    
+            $mail->Subject = "Please verify your account";
+            $mail->Body = 
+            "
+            Click the link to verify your account
+                <br>
+                http://localhost/CRUD-Project-using-PHP-and-MySQL/verify.php?account=$email&code=$random_code
+                <br>
+            ";
+    
+            $mail->send();
+    
+            echo "Sent";
+      
+        } catch(PDOException $e) {
+            echo $e->getMessage();
             $result = "User can't be registered";
         }
     }
@@ -39,6 +93,10 @@
 
             <div class="container">
                 <h2>CREATE ACCOUNT</h2>
+                <select name="type" id="type">
+                    <option>Customer</option>
+                    <option>Admin</option>
+                </select>
                 <input type="email" name="email" id="email" placeholder="Email" autocomplete="off">
                 <input type="password" name="password" id="password" placeholder="Password">   
                 <button>SIGN UP</button>
@@ -54,6 +112,10 @@
         
     <?php include("footer.html"); ?>
 
-        <script src="JS/global.js"></script>
+    <script src="JS/global.js"></script>
+    <script>
+        const accountType = document.getElementById("type");
+
+    </script>
 </body>
 </html>

@@ -2,8 +2,6 @@
     include("connection.php");
     session_start();
 
-    $test1 = 123;
-
     if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["add-to-cart"]) && !empty($_SESSION["id"])) {
         $user_id = $_SESSION["id"];
         $product_id = $_POST["add-to-cart"];
@@ -102,6 +100,8 @@
         }
     }
 
+    
+  
 
     if (empty($_SESSION["id"])) { //Display all items
         $user_id = null;
@@ -116,19 +116,30 @@
         }  catch(PDOException $e) {
             echo $e->getMessage();
         }
+
     } else { //Displays the quantity of item in the cart of User
 
         try {
-            $find_qty_per_item = $db->prepare("SELECT sc.user_id, p.product_id, p.name, p.description, p.price, p.image, ci.quantity FROM product p CROSS JOIN shopping_cart sc LEFT JOIN cart_item ci ON p.product_id = ci.product_id AND sc.cart_id = ci.cart_id WHERE sc.user_id = :id ORDER BY sc.user_id, p.product_id");
-            $find_qty_per_item->bindValue(":id", $_SESSION["id"]);
-            $find_qty_per_item->execute();
+           //Checks if user has shopping cart
+           $find_user_sc = $db->prepare("SELECT * FROM shopping_cart WHERE user_id = :user_id");
+           $find_user_sc->bindValue(":user_id", $_SESSION["id"]);
+           $find_user_sc->execute();
+
+            if ($find_user_sc->rowCount() == 0) {
+                $stmt = $db->query("SELECT * FROM product");
+                $stmt->execute();
     
-            $all_products = $find_qty_per_item->fetchAll(PDO::FETCH_ASSOC);
+                $all_products = $stmt->fetchAll(PDO::FETCH_ASSOC); 
+            } else {
+                $find_qty_per_item = $db->prepare("SELECT sc.user_id, p.product_id, p.name, p.description, p.price, p.image, ci.quantity FROM product p CROSS JOIN shopping_cart sc LEFT JOIN cart_item ci ON p.product_id = ci.product_id AND sc.cart_id = ci.cart_id WHERE sc.user_id = :id ORDER BY sc.user_id, p.product_id");
+                $find_qty_per_item->bindValue(":id", $_SESSION["id"]);
+                $find_qty_per_item->execute();
+                $all_products = $find_qty_per_item->fetchAll(PDO::FETCH_ASSOC);
+            }
 
         } catch (PDOException $e) {
             echo $e->getMessage();
         }
-        
     }
 
 ?>
@@ -163,6 +174,7 @@
     <form class="add-to-cart-form">
         <main>
             <p id="no-item" style="display: none;"></p>
+            
             <!-- Shows all product without QTY | Not logged in -->
             <?php if (empty($_SESSION["id"])) { ?>
 
@@ -203,16 +215,12 @@
                         <div class="add-container">
 
                                 <?php if (isset($product["quantity"])) { ?>
-                                    <!-- <button type="button" class="decrement-btn" style="background-color: white;"" data-productid=<?= $product["product_id"]?>><i class="fa-solid fa-minus"></i></button> -->
                                     <i class="fa-solid fa-minus decrement-btn" data-productid=<?= $product["product_id"]?>></i>
-
                                     <button type="button" class="add-to-cart-btn"><?= $product["quantity"] ?></button>
                                     <i class="fa-regular fa-plus increment-btn" data-productid=<?= $product["product_id"]?>></i>
-<!--                                     <button type="button" class="increment-btn" style="background-color: white;" data-productid=<?= $product["product_id"]?>><i class="fa-regular fa-plus"></i></button>-->
-                                     <?php } else { ?>
-                                    
-                                    <button type="button" class="add-to-cart-btn" data-productid=<?= $product["product_id"] ?>>Add to cart</button>
 
+                                <?php } else { ?>
+                                    <button type="button" class="add-to-cart-btn" data-productid=<?= $product["product_id"] ?>>Add to cart</button>
                                 <?php } ?>
 
                         </div>      
@@ -247,11 +255,17 @@
     const tempBtn = document.querySelectorAll(".temp-btn")
     const popupContainer = document.querySelector(".popup-container");
     const popup = document.querySelector(".popup");
-    const closeSymbol = document.querySelector(".close")
+    const closeSymbol = document.querySelector(".close");
+
+    const mobileNav = document.querySelector(".mobile-nav");
+    const desktopNav = document.querySelector(".desktop-nav");
+
 
          <?php if (empty($_SESSION["id"])) { ?>
             for (const btn of tempBtn) {
                 btn.addEventListener("click", (e) => {
+                    mobileNav.classList.remove("active") 
+                    desktopNav.classList.remove("active") 
                     popupContainer.style.display = "block";
                 })
 

@@ -68,7 +68,7 @@ ul li ul.dropdown {
     z-index: 999;
 }
 
-ul li a:hover {
+header ul li a:hover {
     background-color: rgb(199, 141, 66, 20%);
     border: 1px solid white;
     margin: -1px;
@@ -129,7 +129,7 @@ form {
         display: flex;
     }
 
-    ul li {
+    header ul li {
         width: 100%;
     }
 

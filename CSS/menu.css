@@ -125,7 +125,7 @@ h3 {
     padding: 5rem 2rem;
     width: 50%;
     margin: 15% auto;
-    z-index: 999;
+    z-index: 9999;
 }
 
 .login-link {

@@ -5,7 +5,7 @@
     if (isset($_SESSION["id"])) {
         try {
             $user_id = $_SESSION["id"];
-            $user_order = $db->prepare("SELECT * FROM orders WHERE user_id = :id");
+            $user_order = $db->prepare("SELECT * FROM orders WHERE user_id = :id ORDER BY order_id DESC");
             $user_order->bindParam(":id", $user_id);
             $user_order->execute();
     
