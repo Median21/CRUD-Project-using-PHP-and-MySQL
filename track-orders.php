@@ -32,7 +32,7 @@
     <link rel="stylesheet" href="CSS/admin-dashboard.css">
     <title>Admin Dashboard</title>
 </head>
-<body style="background-image: none;">
+<body style="background-image: none; overflow:hidden;">
     <h1 style="text-align: center;">Trackings</h1>
     <button id="reload">&#8634;</button>
 

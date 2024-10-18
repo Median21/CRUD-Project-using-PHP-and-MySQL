@@ -27,11 +27,11 @@
         }
     }
     
-    $test = $db->prepare("SELECT * FROM profile WHERE user_id = :id");
-    $test->bindParam(":id", $_SESSION["id"]);
-    $test->execute();
+    $profiles = $db->prepare("SELECT * FROM profile WHERE user_id = :id");
+    $profiles->bindParam(":id", $_SESSION["id"]);
+    $profiles->execute();
 
-    $row = $test->fetch(PDO::FETCH_ASSOC);
+    $row = $profiles->fetch(PDO::FETCH_ASSOC);
 
     $get_email = $db->query("SELECT email, verified FROM user WHERE id =  {$_SESSION["id"]}");
     $get_email->execute();
@@ -56,14 +56,8 @@
 <body>
     <?php include("header.php"); ?>
     <form action="<?= $_SERVER["PHP_SELF"] ?>" method="post" class="profile-form">
-<!--         <h1 class="form-title">Personal Information</h1> -->
 
-            <!-- <label for="verified">
-                Verified
-            </label> -->
-
-
-        <?php if ($test->rowCount() > 0) { ?>
+        <?php if ($profiles) { ?>
             <label for="email">
                 Email verified: <?= $fetch_email["verified"] ? 
                 '<i class="fa-regular fa-circle-check" style="color: #63E6BE;"></i>'
@@ -91,13 +85,15 @@
             </label>
         <?php } ?>
 
+        
+
         <button name="save">SAVE</button>
     </form>
 
 
     <script src="JS/global.js"></script>
     <script>
-        document.getElementById("address").focus()
+
     </script>
 </body>
 </html>
