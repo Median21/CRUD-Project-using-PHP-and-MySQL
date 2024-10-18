@@ -5,6 +5,7 @@ const decrementBtns = document.querySelectorAll(".decrement-btn")
 
 
 const searchBar = document.getElementById("filter-menu");
+const filterInput = document.getElementById("filter");
 const filterForm = document.querySelector(".filter-form")
 const form = document.querySelector(".add-to-cart-form");
 
@@ -45,7 +46,7 @@ function filterJS() {
     }
 }
 
-
+filterInput.addEventListener("input", filterJS);
 
 document.body.addEventListener("click", (e) => {
 
@@ -104,5 +105,3 @@ document.body.addEventListener("click", (e) => {
 
     }
 });
-
-

@@ -1,26 +1,28 @@
 .register-form {
-    padding: 3rem 0;
+    padding: 5rem 0;
     width: 50%;
     max-width: 600px;
     margin: 3rem auto;
     border-radius: 8px;
-
     background: rgba( 255, 255, 255, 0.3 );
     box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
     backdrop-filter: blur( 9px );
     -webkit-backdrop-filter: blur( 9px );
-    border: 1px solid rgba( 255, 255, 255, 0.18 );
-    
-}
-
-h2 {
-    margin-top: 0;
-    text-align: center;
+    border: 1px solid rgba( 255, 255, 255, 0.18 ); 
 }
 
 .container {
     width: 80%;
     margin: 0 auto;
+}
+
+#create-account {
+    margin-top: 0;
+    text-align: center;
+}
+
+#type {
+    font-size: 1rem;
 }
 
 input {
@@ -46,7 +48,6 @@ button {
 button:hover {
     background-color: rgb(224, 157, 33);
 }
-
 
 @media (max-width: 950px) {
     .register-form {

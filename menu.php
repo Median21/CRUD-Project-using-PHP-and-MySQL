@@ -2,36 +2,41 @@
     include("connection.php");
     session_start();
 
+    //Adds to cart
     if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["add-to-cart"]) && !empty($_SESSION["id"])) {
         $user_id = $_SESSION["id"];
         $product_id = $_POST["add-to-cart"];
-        echo $product_id;
+
         try {
-            //Find shopping card record
+            //Find shopping cart record
             $find_cart_id = $db->query("SELECT * FROM shopping_cart WHERE user_id = '$user_id'");
             $find_cart_id->execute();
 
             if ($find_cart_id->rowCount() == 0) { //No shopping chart
                 //Add shopping_cart record for the user
                 echo "No cart found, adding shopping_cart record";
-                $user_cart = $db->query("INSERT INTO shopping_cart (user_id)
-                                         VALUES ($user_id)");
+                $user_cart = $db->query("INSERT INTO
+                                            shopping_cart (user_id)
+                                         VALUES 
+                                            ($user_id)");
         
             }
-            echo "Before";
 
+            //Finds the shopping_cart of the USER
             $final_find_cart_id = $db->query("SELECT * FROM shopping_cart WHERE user_id = '$user_id'");
             $final_find_cart_id->execute();
+            /* cart_id | user_id */
 
+            //Gets the cart_id
             $cart_id = $final_find_cart_id->fetch();
             $cart_id = $cart_id["cart_id"];
-            echo "After";
+            /* cart_id */
+
             //Check if there is an existing cart_id and product_id
             $cart_and_product = $db->query("SELECT * FROM cart_item WHERE cart_id = '$cart_id' AND product_id = '$product_id'");
             $cart_and_product->execute();
 
             if ($cart_and_product->rowCount() == 0) { //Add cart item
-                echo "ADDING TO CART...";
                 //For cart_item TABLE (ADD new cart_item ROW)
                 $cart_item = $db->prepare("INSERT INTO cart_item (cart_id, product_id, quantity)
                                            VALUES (:cart_id, :product_id, :quantity)");
@@ -40,7 +45,6 @@
                 $cart_item->bindValue(":quantity", 1);
                 $cart_item->execute();
             } else { //Update quantity of cart item
-                echo "Already in cart, updating quantity";
                 $old_quantity = $cart_and_product->fetch(PDO::FETCH_ASSOC);
                 $old_quantity = $old_quantity["quantity"];
                 $new_quantity = $old_quantity + 1;
@@ -53,29 +57,27 @@
 
         } catch (PDOException $e) {
            echo $e->getMessage();
-           echo "test"; 
         }
     }
 
-    //Reduce cart
+    //Reduces cart
     if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["reduce-cart"]) && !empty($_SESSION["id"])) {
         $user_id = $_SESSION["id"];
         $product_id = $_POST["reduce-cart"];
 
         try {
-            //Find shopping card record
+            //Find shopping cart record
             $find_cart_id = $db->query("SELECT * FROM shopping_cart WHERE user_id = '$user_id'");
             $find_cart_id->execute();
 
             $cart_id = $find_cart_id->fetch();
             $cart_id = $cart_id["cart_id"];
-            echo "After";
+
             //Check if there is an existing cart_id and product_id
             $cart_and_product = $db->query("SELECT * FROM cart_item WHERE cart_id = '$cart_id' AND product_id = '$product_id'");
             $cart_and_product->execute();
 
              //Update quantity of cart item
-                echo "Already in cart, updating quantity";
                 $old_quantity = $cart_and_product->fetch(PDO::FETCH_ASSOC);
                 $old_quantity = $old_quantity["quantity"];
 
@@ -96,13 +98,10 @@
 
         } catch (PDOException $e) {
            echo $e->getMessage();
-           echo "test"; 
         }
     }
 
     
-  
-
     if (empty($_SESSION["id"])) { //Display all items
         $user_id = null;
         $all_products = null;
@@ -167,9 +166,12 @@
 </head>
 <body>
     <?php include("header.php") ?>
-
+   
     <h2 class="menu-title">MENU</h2>
-    <input type="search" name="filter" id="filter" oninput="filterJS()" placeholder="Search">
+   
+    <div class="search-container">
+        <input type="search" name="filter" id="filter" placeholder="Search">
+    </div>
 
     <form class="add-to-cart-form">
         <main>
@@ -200,7 +202,6 @@
                 
                 <!-- Logged In -->
                 <?php foreach ($all_products as $product) { ?>
-
                     <div class="menu-container">
                         <div class="image-container">
                             <img src="products/<?= rawurlencode($product["image"]) ?>" alt=<?= $product["name"] ?>>
@@ -213,24 +214,19 @@
                         </div>
 
                         <div class="add-container">
+                            <?php if (isset($product["quantity"])) { ?>
+                                <i class="fa-solid fa-minus decrement-btn" data-productid=<?= $product["product_id"]?>></i>
+                                <button type="button" class="add-to-cart-btn"><?= $product["quantity"] ?></button>
+                                <i class="fa-regular fa-plus increment-btn" data-productid=<?= $product["product_id"]?>></i>
 
-                                <?php if (isset($product["quantity"])) { ?>
-                                    <i class="fa-solid fa-minus decrement-btn" data-productid=<?= $product["product_id"]?>></i>
-                                    <button type="button" class="add-to-cart-btn"><?= $product["quantity"] ?></button>
-                                    <i class="fa-regular fa-plus increment-btn" data-productid=<?= $product["product_id"]?>></i>
-
-                                <?php } else { ?>
-                                    <button type="button" class="add-to-cart-btn" data-productid=<?= $product["product_id"] ?>>Add to cart</button>
-                                <?php } ?>
-
+                            <?php } else { ?>
+                                <button type="button" class="add-to-cart-btn" data-productid=<?= $product["product_id"] ?>>Add to cart</button>
+                            <?php } ?>
                         </div>      
                     </div>
-
                 <?php } ?>
 
             <?php } ?>
-
-        
         </main>
     </form>
 
@@ -245,21 +241,16 @@
 
     <?php include("footer.html") ?>
 
-
-
-
     <script src="JS/global.js"></script>
     <script src="JS/menu.js"></script>
-
     <script>
+    //Shows a popup telling a user to login (if add to cart button was clicked)
     const tempBtn = document.querySelectorAll(".temp-btn")
     const popupContainer = document.querySelector(".popup-container");
     const popup = document.querySelector(".popup");
     const closeSymbol = document.querySelector(".close");
-
     const mobileNav = document.querySelector(".mobile-nav");
     const desktopNav = document.querySelector(".desktop-nav");
-
 
          <?php if (empty($_SESSION["id"])) { ?>
             for (const btn of tempBtn) {

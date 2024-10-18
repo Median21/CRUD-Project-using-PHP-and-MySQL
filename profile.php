@@ -27,10 +27,11 @@
         }
     }
     
-    $stmt = $db->prepare("SELECT * FROM profile WHERE user_id = :id");
-    $stmt->bindParam(":id", $_SESSION["id"]);
-    $stmt->execute();
-    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    $test = $db->prepare("SELECT * FROM profile WHERE user_id = :id");
+    $test->bindParam(":id", $_SESSION["id"]);
+    $test->execute();
+
+    $row = $test->fetch(PDO::FETCH_ASSOC);
 
     $get_email = $db->query("SELECT email, verified FROM user WHERE id =  {$_SESSION["id"]}");
     $get_email->execute();
@@ -54,13 +55,15 @@
 </head>
 <body>
     <?php include("header.php"); ?>
-    <form action="profile.php" method="post" class="profile-form">
+    <form action="<?= $_SERVER["PHP_SELF"] ?>" method="post" class="profile-form">
 <!--         <h1 class="form-title">Personal Information</h1> -->
 
             <!-- <label for="verified">
                 Verified
             </label> -->
 
+
+        <?php if ($test->rowCount() > 0) { ?>
             <label for="email">
                 Email verified: <?= $fetch_email["verified"] ? 
                 '<i class="fa-regular fa-circle-check" style="color: #63E6BE;"></i>'
@@ -70,28 +73,31 @@
             </label>
 
             <label for="first-name">First name:
-            <input type="text" name="first-name" id="first-name" placeholder="First name" value=<?php echo ($row ? $row["first_name"] : "") ?> >
+            <input type="text" name="first-name" id="first-name" placeholder="First name" value="<?= ($row ? $row["first_name"] : "") ?>" >
             </label>
     
             <label for="last-name">Last name:
-                <input type="text" name="last-name" id="last-name" placeholder="Last name" value=<?php echo ($row ? $row["last_name"] : "") ?> >
+                <input type="text" name="last-name" id="last-name" placeholder="Last name" value="<?php echo ($row ? $row["last_name"] : "") ?>" >
                 </label>
     
             <label for="contact-number">Contact number:
-                <input type="text" name="contact-number" id="contact-number" placeholder="Contact number" value=<?php echo ($row ? $row["contact_number"] : "") ?> >
+                <input type="text" name="contact-number" id="contact-number" placeholder="Contact number" value="<?= ($row ? $row["contact_number"] : "") ?>" >
             </label>
     
             <hr>
             
             <label for="address">Current Address:
-                <input type="text" name="address" id="address" value=<?php echo ($row ? $row["address"] : "") ?> >
+                <input type="text" name="address" id="address" value="<?= ($row ? $row["address"] : "") ?>" >
             </label>
-
+        <?php } ?>
 
         <button name="save">SAVE</button>
     </form>
 
 
     <script src="JS/global.js"></script>
+    <script>
+        document.getElementById("address").focus()
+    </script>
 </body>
 </html>

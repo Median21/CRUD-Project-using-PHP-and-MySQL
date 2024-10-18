@@ -21,8 +21,6 @@
             echo $e->getMessage();
         }
     }
-
-
 ?>
 
 <!DOCTYPE html>

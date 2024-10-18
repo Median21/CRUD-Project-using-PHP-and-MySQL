@@ -61,79 +61,70 @@
     <link rel="stylesheet" href="CSS/global.css">
     <link rel="stylesheet" href="CSS/headers.css">
     <link rel="stylesheet" href="CSS/add-product.css">
-    <title>Add Products | BakeMaster</title>
+    <title>BakeMaster | Products</title>
 </head>
 <body>
     <?php include("header.php") ?>
 
-
-    <main>
-
-    <div class="relative-container">
-        <section class="manage-products">
-            <h2>All Products</h2>
-            <button id="show-product-form" title="CTRL Shortcut">+</button>
-            <table>
-            <tr>
-                <th>Image</th>
-                <th>Name</th>
-                <th>Price</th>
-                <th>Action</th>
-            </tr>
-    
-            <?php if ($products->rowCount() > 0) { ?>
-                <?php $all_products = $products->fetchAll(PDO::FETCH_ASSOC) ?>
-                <?php foreach($all_products as $product) { ?>
-                    <tr>
-                        <td><img src=products/<?= $product["image"]?> alt="no pic"></td>
-                        <td><?= $product["name"] ?></td>
-                        <td><?= $product["price"] ?></td>
-                        <form action="add-product.php" method="post">
-                            <td><button name="delete" class="delete-btn" value="<?= $product['product_id']?>">Delete</button></td>
-                        </form>
-                    </tr>
+        <main class="relative-container">
+            <section class="manage-products">
+                <h2>All Products</h2>
+                <button id="add-product-btn" title="CTRL Shortcut">+</button>
+                <table>
+                <tr>
+                    <th>Image</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Action</th>
+                </tr>
+        
+                <?php if ($products->rowCount() > 0) { ?>
+                    <?php $all_products = $products->fetchAll(PDO::FETCH_ASSOC) ?>
+                    <?php foreach($all_products as $product) { ?>
+                        <tr>
+                            <td><img src=products/<?= $product["image"]?> alt="no pic"></td>
+                            <td><?= $product["name"] ?></td>
+                            <td><?= $product["price"] ?></td>
+                            <form action="add-product.php" method="post">
+                                <td><button name="delete" class="delete-btn" value="<?= $product['product_id']?>">Delete</button></td>
+                            </form>
+                        </tr>
+                    <?php } ?>
                 <?php } ?>
-            <?php } ?>
-            </table>
-            
-   
-        </section>
-    
-    
-    
-        <section class="add-container">
-            <form action="add-product.php" method="post" class="add-product-form" enctype="multipart/form-data">
-                <h2>ADD PRODUCT</h2>
-                <label for="product-name">Product Name:</label>
-                <input type="text" name="product-name" id="product-name" required>
-        
-                <label for="price">Price (₱):</label>
-                <input type="number" name="price" id="price" step="0.01" required>
-        
-                <label for="category">Category:</label>
-                <select name="category" id="category" required>
-                    <option value="bread">Bread</option>
-                    <option value="cookies">Cookies</option>
-                </select>
-        
-                <label for="description">Description:</label>
-                <textarea name="description" id="description" rows="7" required></textarea>
-    
-    
-                <input type="file" name="file" id="file" accept=".jpg, .png" required>
-        
-                <button name="add-product" class="add-btn">ADD</button>
-            </form>
-        </section>
+                </table>
+            </section>
 
-    </div>
+            <section class="add-container">
+                <form action="add-product.php" method="post" class="add-product-form" enctype="multipart/form-data">
+                    <h2>ADD PRODUCT</h2>
+                    <label for="product-name">Product Name:</label>
+                    <input type="text" name="product-name" id="product-name" required>
+            
+                    <label for="price">Price (₱):</label>
+                    <input type="number" name="price" id="price" step="0.01" required>
+            
+                    <label for="category">Category:</label>
+                    <select name="category" id="category" required>
+                        <option value="bread">Bread</option>
+                        <option value="cookies">Cookies</option>
+                    </select>
+            
+                    <label for="description">Description:</label>
+                    <textarea name="description" id="description" rows="7" required></textarea>
+        
+        
+                    <input type="file" name="file" id="file" accept=".jpg, .png" required>
+            
+                    <button name="add-product" class="add-btn">ADD</button>
+                </form>
+            </section>
     </main>
 
     <?php include("footer.html"); ?>
 
     <script src="JS/global.js"></script>
     <script>
-        const showButton = document.getElementById("show-product-form");
+        const showButton = document.getElementById("add-product-btn");
         const singleBtn = document.querySelector(".delete-btn");
         const deleteBtn = document.querySelectorAll(".delete-btn");
 
@@ -152,13 +143,6 @@
             })
         })
             
-        
-    
-
-
-
-        
-
 
     </script>
 </body>

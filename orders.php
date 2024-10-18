@@ -32,7 +32,7 @@
 <body>
     <?php include("header.php") ?>
 
-    <h1 style="text-align: center;">Orders</h1>
+    <h1 class="orders-title">Orders</h1>
 
     <table>
         <tr>

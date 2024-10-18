@@ -2,16 +2,26 @@
     include("connection.php");
     session_start();
 
-  /*   $best_sellers = $db->query("SELECT product_id, SUM(quantity) FROM order_details GROUP BY product_id ORDER BY SUM(quantity) DESC LIMIT 3"); */
-
-    
-        $best_sellers = $db->query("SELECT order_details.product_id, SUM(quantity), product.name, product.price, product.image FROM order_details INNER JOIN product ON order_details.product_id = product.product_id GROUP BY product_id ORDER BY SUM(quantity) DESC LIMIT 3");
-
+        $best_sellers = $db->query("SELECT 
+                                        order_details.product_id,
+                                        SUM(quantity),
+                                        product.name,
+                                        product.price,
+                                        product.image,
+                                        orders.status
+                                    FROM 
+                                        order_details
+                                    INNER JOIN product ON order_details.product_id = product.product_id
+                                    INNER JOIN orders ON orders.order_id = order_details.order_id
+                                    WHERE
+                                        status = 'Completed'
+                                    GROUP BY 
+                                        product_id
+                                    ORDER BY
+                                        SUM(quantity)
+                                    DESC
+                                    LIMIT 3");
         $best_sellers->execute();
- 
-
-   
-
 
 ?>
 
@@ -40,8 +50,8 @@
         <section class="hero" data-aos="fade-up">
             <div class="left-hero">
                 <h1>Welcome to BakeMaster!</h1>
-                <p>Whether you’re craving a flaky croissant, a rich chocolate cake, or a slice of our famous sourdough, you’ll find it here.</p>
-                <button class="explore-btn" onClick="document.getElementById('menu').scrollIntoView()">Explore now</button>
+                <p>Whether you're craving a flaky croissant, a rich chocolate cake, or a slice of our famous sourdough, you'll find it here.</p>
+                <button class="explore-btn" onclick="document.getElementById('menu').scrollIntoView()">Explore now</button>
             </div>
 
             <div class="right-hero">
@@ -57,62 +67,27 @@
             </div>
 
             <div class="top-menu">
-
-            <?php if ($best_sellers) { ?>
-                <?php foreach($best_sellers as $best_seller) { ?>
-                <div class="food-container">
-                    <img src=products/<?= $best_seller["image"] ?> alt="a">
-                        <h3> <?= $best_seller["name"] ?> </h3>
-                        <p>Sold: <?= $best_seller["SUM(quantity)"] ?> </p>
-                        <p>₱<?= $best_seller["price"] ?></p>
-                        <button class="add-to-cart-btn">Add to cart</button>
+                <?php if ($best_sellers) { ?>
+                    <?php foreach($best_sellers as $best_seller) { ?>
+                    <div class="food-container">
+                        <img src=products/<?= $best_seller["image"] ?> alt="a">
+                            <h3> <?= $best_seller["name"] ?> </h3>
+                            <p>Sold: <?= $best_seller["SUM(quantity)"] ?> </p>
+                            <p>₱<?= $best_seller["price"] ?></p>
+                            <button class="add-to-cart-btn">Add to cart</button>
                     </div>
+                    <?php } ?>
                 <?php } ?>
-
-            <?php } else { ?>
-                <div class="food-container">
-                    <img src="images/Menu/image-meringue-desktop.jpg" alt="">
-                    <h3>Food 1</h3>
-                    <p>This is food 1</p>
-                    <p>$1.50</p>
-                    <button class="add-to-cart-btn">Add to cart</button>
-                </div>
-
-                <div class="food-container">
-                    <img src="images/Menu/image-meringue-desktop.jpg" alt="">
-                    <h3>Food 2</h3>
-                    <p>This is food 2</p>
-                    <p>$2.50</p>
-                    <button class="add-to-cart-btn">Add to cart</button>
-                </div>
-
-                <div class="food-container">
-                    <img src="images/Menu/image-meringue-desktop.jpg" alt="">
-                    <h3>Food 3</h3>
-                    <p>This is food 3</p>
-                    <p>$10.25</p>
-                    <button class="add-to-cart-btn">Add to cart</button>
-                </div>
             </div>
-            <?php } ?>
-        </section>   
-
-
+        </section>
     </main>
-    <?php include("footer.html") ?>
 
+    <?php include("footer.html") ?>
 
     <script src="JS/global.js"></script>
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script>
         AOS.init();
     </script>
-
-<script>
-    document.getElementById("logout-dropdown").addEventListener("click", () => {
-        document.querySelector(".logout-form").submit();
-        console.log("test")
-    })
-</script>
 </body>
 </html>

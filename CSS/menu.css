@@ -1,3 +1,8 @@
+.menu-title {
+    text-align: center;
+    margin-bottom: 0;
+}
+
 main {
     display: grid;
     /* grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); */
@@ -7,23 +12,7 @@ main {
     margin: 0 auto;
     padding: 2rem;
     border-radius: 20px;
-
     justify-content: center;
-}
-
-h3 {
-    text-align: center;
-}
-
-.menu-title {
-    text-align: center;
-    margin-bottom: 0;
-}
-
-.menu-container img {
-    width: 100%;
-    height: 100%;
-
 }
 
 .menu-container {
@@ -42,37 +31,35 @@ h3 {
     height: 50%;
 }
 
+.image-container img {
+    width: 100%;
+    height: 100%;
+}
+
 .product-name {
-    margin: 0;
+    margin: 1.2rem 0;
     font-family: "Open Sans", sans-serif;
     font-weight: 400;
-}
-
-.category {
-    background-color: lightgray;
-    border-radius: 100px;
-    width: fit-content;
-    padding: 0.5rem 1rem;
-    text-align: center;
-    margin: 0 auto;
-    margin-bottom: 1rem;
-}
-
-.description {
-    font-size: 1rem;
 }
 
 .price {
     background-color: lightgray;
     width: fit-content;
     margin: auto;
+    margin-bottom: 2rem;
     border-radius: 10px;
     padding: 0.2rem 3.5rem;
     margin-bottom: 1rem;
+    text-align: center;
+}
+
+.description {
+    font-size: 1rem;
 }
 
 .add-container {
     margin: auto;
+    margin-top: 1rem;
     text-align: center;
     display: flex;
     align-items: center;
@@ -80,19 +67,7 @@ h3 {
     justify-content: center
 }
 
-
-.temp-btn {
-    font-size: 1.5rem;
-    cursor: pointer;
-    justify-content: end;
-    border-radius: 20px;
-    background-color: orange;
-    border: none;
-    padding: 0.5rem 2rem;
-    margin: 0 1rem;
-}
-
-.add-to-cart-btn {
+.add-to-cart-btn, .temp-btn {
     font-size: 1.5rem;
     justify-content: end;
     border-radius: 20px;
@@ -105,7 +80,6 @@ h3 {
 .add-btn:hover {
     background-color: rgb(221, 145, 4);
 }
-
 
 .popup-container {
     display: none;
@@ -153,16 +127,19 @@ h3 {
     color: black;
 }
 
-#filter {
-    width: 280px;
-    border-radius: 20px;
-    padding: 0.8rem 1rem;
-    border: 1px solid black;
-    margin-left: auto;
-    font-size: 1.2rem;
-    margin-right: 2rem;
+.search-container {
+    width: 80%;
+    margin: 0 auto;
+    text-align: right;
 }
 
+#filter {
+    width: 280px;
+    border-radius: 25px;
+    padding: 0.8rem 1rem;
+    border: 1px solid black;
+    font-size: 1.2rem;
+}
 
 i {
     font-size: 1.3rem;
@@ -170,8 +147,11 @@ i {
     transition: 0.1s ease-in-out;
 }
 
-i:hover {
+.add-container i:hover {
     scale: 1.7;
     color: green;
 }
 
+#no-item {
+    text-align: center;
+}

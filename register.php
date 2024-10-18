@@ -10,19 +10,18 @@
     require 'phpmailer/src/SMTP.php';
 
     require __DIR__ . '/vendor/autoload.php';
-
     $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/');
     $dotenv->load();
 
     $result = "";
     
+    if (isset($_SESSION["temp_email"])) {
+        echo "Temp Email: " . $_SESSION['temp_email'];
+        unset($_SESSION["temp_email"]);
+     }
+
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
-        function random_code() {
-            return rand(0,999999);
-        }
-
-        $random_code = random_code();
+        $random_code = rand(0,999999);
 
         try {
             $email = $_POST["email"];
@@ -36,9 +35,8 @@
             $stmt->bindValue(":type", $type);
             $stmt->bindValue(":code", $random_code);
             $stmt->execute();
-            $result = "User has been registered <br> An email verification has been sent to your email";
+       
  
-
             $mail = new PHPMailer(true);
     
             $mail->isSMTP();
@@ -60,12 +58,17 @@
             "
             Click the link to verify your account
                 <br>
-                http://localhost/CRUD-Project-using-PHP-and-MySQL/verify.php?account=$email&code=$random_code
+                <a href=http://localhost/CRUD-Project-using-PHP-and-MySQL/verify.php?account=$email&code=$random_code>VERIFY ACCOUNT</a>
                 <br>
             ";
     
             $mail->send();
-    
+
+            $result = "User has been registered <br> An email verification has been sent to your email";
+
+            $_SESSION['temp_email'] = $_POST['email'];
+            header("Location: register.php");
+            exit;
             echo "Sent";
       
         } catch(PDOException $e) {
@@ -85,14 +88,13 @@
     <link rel="stylesheet" href="CSS/headers.css">
     <link rel="stylesheet" href="CSS/register.css">
     <title>BakeMaster | Register</title>
-</head>
+</head> 
 <body>
     <?php include("header.php") ?>
 
-        <form action="register.php" method="post" class="register-form">
-
+        <form action="<?= $_SERVER["PHP_SELF"] ?>" method="post" class="register-form">
             <div class="container">
-                <h2>CREATE ACCOUNT</h2>
+                <h2 id="create-account">CREATE ACCOUNT</h2>
                 <select name="type" id="type">
                     <option>Customer</option>
                     <option>Admin</option>
@@ -100,16 +102,13 @@
                 <input type="email" name="email" id="email" placeholder="Email" autocomplete="off">
                 <input type="password" name="password" id="password" placeholder="Password">   
                 <button>SIGN UP</button>
-                <?php
-            if (!empty($result)) {
-                echo "<p style=text-align:center>$result</p>";
-            }
-            ?>
+    
+                <?php if (!empty($result)) { ?>
+                    <p style="text-align: center;"><?= $result ?></p>
+                <?php } ?>
             </div>
-
         </form>
 
-        
     <?php include("footer.html"); ?>
 
     <script src="JS/global.js"></script>

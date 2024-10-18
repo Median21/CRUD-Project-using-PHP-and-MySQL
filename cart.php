@@ -2,6 +2,11 @@
     include("connection.php");
     session_start();
 
+    if (isset($_SESSION["has_ordered"])) {
+        echo "Has ordered: " . $_SESSION['has_ordered'];
+        unset($_SESSION["has_ordered"]);
+     }
+
     if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["checkout"])) {
         $time = time();
         date_default_timezone_set('Asia/Hong_Kong');
@@ -44,7 +49,7 @@
             $cart_id_sc = $get_cart_id_from_sc->fetch();
             $cart_id_sc = $cart_id_sc["cart_id"];
             
-
+            //INSERTS order_details record
             $copy_cart_item = $db->prepare("INSERT INTO order_details (user_id, order_id, product_id, quantity) SELECT :user_id, :order_id, product_id, quantity FROM cart_item WHERE cart_id = :cartID_sc");
 
             $copy_cart_item->bindParam(":user_id", $_SESSION["id"]);
@@ -58,6 +63,14 @@
             $clear_cart_item->bindParam(":cart_id", $cartID_from_shoppingcart["cart_id"]);
             $clear_cart_item->execute();
 
+            
+            $_SESSION['has_ordered'] = true;
+            header("Location: cart.php");
+            exit;
+            echo "Sent";
+
+            
+
         } catch (PDOException $e) {
             echo $e->getMessage();
         }
@@ -68,7 +81,24 @@
     try {
         $user_id = $_SESSION["id"];
 
-        $user_shopping_cart = $db->query("SELECT * FROM shopping_cart WHERE user_id = '$user_id'");
+        //Gets address from profile table
+        $stmt = $db->prepare("SELECT * FROM profile WHERE user_id = :id");
+        $stmt->bindValue(":id", $user_id);
+        $stmt->execute();
+
+        $user_address = $stmt->fetch();
+      
+
+        
+        //Change to cart ITEM
+        $user_shopping_cart = $db->query("SELECT
+                                            cart_item.cart_id,
+                                            shopping_cart.user_id
+                                        FROM
+                                            cart_item
+                                        INNER JOIN shopping_cart ON cart_item.cart_id = shopping_cart.cart_id
+                                        WHERE
+                                            user_id = $user_id");
         $user_shopping_cart->execute();
 
         if ($user_shopping_cart->rowCount() > 0) {
@@ -142,42 +172,58 @@
 </head>
 <body>
     <?php include("header.php"); ?>
-
+    
     <div class="cart-container">
         <h1 class="your-cart">Your Cart</h1>
+        <div class="address-container">
+            <p> <span style="text-decoration: underline;">Address:</span> <?= !empty($user_address["address"]) ? $user_address["address"] : "No Address set" ?></p>
+            <a href="profile.php">Edit</a>
+        </div>
+       
+       
+      
 
-        <table>
-            <tr>
-                <th class="image-col">Product</th>
-                <th class="name-col">Name</th>
-                <th class="qty-col">QTY</th>
-                <th class="price-col">Price</th>
-                <th class="total-col">Total</th>
+        <?php if ($user_shopping_cart->rowCount() > 0) { ?>
+ 
+            <h3>Items</h3>
+            <h3>Name</h3>
+            <h3>Quantity</h3>
+            <h3>Amount</h3>
+
+            <?php while($cart_item = $cart_item_product_join->fetch(PDO::FETCH_ASSOC)) {?>
+                <div>
+                    <img src="products/<?= $cart_item['image'] ?>" alt="">
+                </div>
+                    <p><?= $cart_item["name"] ?></p>
+                    <p>x<?= $cart_item["quantity"] ?></p>
+                    <p>₱ <?= $cart_item["price"] * $cart_item["quantity"]?> </p>
+            <?php } ?>
+            
+                <div class="line"></div>
+
+            
+                <p class="price-details">Subtotal (Incl. 12% VAT)</p>
+                <p>₱ <?= $grand_total ?></p>
+
                 
-            </tr>
+                <p class="price-details">Delivery Fee</p>
+                <p>₱ 50</p>
 
-            <?php if ($user_shopping_cart->rowCount() > 0) { ?>
-                <form action="cart.php" method="post">
-                    <button name="checkout">CHECKOUT</button>
+                <p class="price-details">GRAND TOTAL: </p>
+                <p style="border-top: 1px solid black; padding-top: 2rem">₱ <?= $grand_total + 50 ?></p>
+
+                <h6 class="price-details">(12% VAT)</h6>
+                <h6>(₱ <?= $grand_total * 0.12 ?>)</h6>
+                
+                <form action="<?= $_SERVER["PHP_SELF"] ?>" method="post" class="checkout-form">
+                    <button name="checkout" id="checkout-btn">ORDER</button>
                 </form>
 
-                <?php while($cart_item = $cart_item_product_join->fetch(PDO::FETCH_ASSOC)) {?>
-                    <tr>
-                        <td><img class="product-image" src="products/<?= $cart_item["image"]?>" alt="<? $cart_item['name'] ?>"></td>
-                        <td><?= $cart_item["name"] ?></td>
-                        <td><?= $cart_item["quantity"] ?></td>
-                        <td><?= $cart_item["price"] ?></td>
-                        <td><?= $cart_item["sub_total"] ?></td>
-                    </tr>
-                <?php } ?>
-                
-                <h1>Grand Total: <?= $grand_total ?></h1>
-                
+        <?php } else { ?>
+                <p style="grid-column: 1 / -1;">Cart is empty</p>
+        <?php } ?>
 
-            <?php } else { ?>
-                    <p>Cart is empty</p>
-            <?php } ?>
-        </table>
+        
     </div>
 
     <?php include("footer.html"); ?>

@@ -2,6 +2,13 @@
     include("connection.php");
     session_start();
 
+    if (empty($_SESSION)) {
+        echo "Not logged in <br>";
+    } else {
+        echo "Logged in <br>";
+        echo "Current user: {$_SESSION['email']}";
+    }
+
     if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["login"])) {
         try {
             $stmt = $db->prepare("SELECT * FROM user WHERE email = :email");
@@ -10,38 +17,27 @@
             
             if ($stmt->rowCount() > 0) {
                 while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-
                     if (password_verify($_POST["password"], $row["password"]) && $row["type"] == "Customer") {
                         $_SESSION["id"] = $row["id"];
-                        $_SESSION["email"] = $_POST["email"];
+                        $_SESSION["email"] = $_row["email"];
                         header("Location: index.php");
                     } elseif (password_verify($_POST["password"], $row["password"]) && $row["type"] == "Admin") {
                         $_SESSION["id"] = $row["id"];
-                        $_SESSION["email"] = $_POST["email"];
+                        $_SESSION["email"] = $_row["email"];
                         header("Location: admin-dashboard.php");
                     } else {
                         echo "Incorrect credentials <br>";
                     }
-
                  }
             } else {
                 echo "No user found <br>";
             }
-    
         } catch (PDOException) {
             echo "Error";
         }
     } elseif ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["logout"])) {
         session_destroy();
         header("Location: login.php");
-    }
-
-
-    if (empty($_SESSION)) {
-        echo "Not logged in <br>";
-    } else {
-        echo "Logged in <br>";
-        echo "Current user: {$_SESSION['email']}";
     }
 ?>
 
@@ -63,15 +59,11 @@
     <?php include("header.php") ?>
 
     <div class="flex-container">
-       <!--  <div class="left-side">
-
-        </div> -->
-
-        <form action="login.php" method="post" class="login-form">
+        <form action="<?= $_SERVER["PHP_SELF"] ?>" method="post" class="login-form">
             <?php if (empty($_SESSION)) {?>
                 <input type="email" name="email" id="email" placeholder="Email" autocomplete="off" autofocus required>
                 <input type="password" name="password" id="password" placeholder="Password" required>
-                <button name="login" class="login">LOGIN</button>
+                <button name="login" class="login-btn">LOGIN</button>
                 <p class="or">OR</p>
                 <a href="register.php" class="create-account">Create an account</a>
             <?php } else {?>
@@ -81,8 +73,6 @@
         </form>
     </div>
 
-
-    
     <script src="JS/global.js"></script>
 </body>
 </html>

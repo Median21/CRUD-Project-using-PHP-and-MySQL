@@ -18,9 +18,7 @@
 
     } catch (PDOException $e) {
         echo $e->getMessage();
-
     }
-    
 ?>
 
 <!DOCTYPE html>
@@ -29,14 +27,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-
+    <link rel="stylesheet" href="CSS/global.css ">
     <link rel="stylesheet" href="CSS/headers.css">
     <link rel="stylesheet" href="CSS/admin-dashboard.css">
     <title>Admin Dashboard</title>
 </head>
-<body>
-
-
+<body style="background-image: none;">
     <h1 style="text-align: center;">Trackings</h1>
     <button id="reload">&#8634;</button>
 
@@ -73,13 +69,8 @@
             <?php } ?>
             </ul>
         </section>
-
-     
-
-    
     </main>
 
-   
     <script>
         const links = document.querySelectorAll("a");
 

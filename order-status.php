@@ -59,6 +59,7 @@
     <title>Document</title>
 </head>
 <body>
+    <a href="" id="currentURL">a</a>
 
         <h2>Order #<?= $order_items_arr[0]["order_id"] ?></h2>
         <h3>Customer ID: <?= $order_items_arr[0]["user_id"] ?></h3>
@@ -111,9 +112,9 @@
         let orderID = document.getElementById("hidden_order").value
         let statusVal = document.getElementById("status")
 
-        console.log("<?= $order_items_arr[0]["order_id"] ?>");
+        document.getElementById("currentURL").href = location.href;
+        document.getElementById("currentURL").textContent = "Current url";
 
-        
         document.getElementById("update-btn").addEventListener("click", () => {
             $.ajax({
                 type: 'POST',
@@ -122,12 +123,9 @@
             })
 
             setTimeout(() => {
-                parent.document.getElementById("orders-frame").src = "test2.php";
+                parent.document.getElementById("orders-frame").src = "track-orders.php";
                 location.reload();
             }, 1000)
-           
-
-      
         })
     </script>
 </body>
