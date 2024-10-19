@@ -1,5 +1,6 @@
 <?php
     include("connection.php");
+    session_start();
 
     try {
        /*  $stmt = $db->query("SELECT * FROM orders WHERE order_id = {$_GET['order']}");
@@ -59,7 +60,10 @@
     <title>Document</title>
 </head>
 <body>
-    <a href="" id="currentURL">a</a>
+  
+    <?php if (empty($_SESSION["type"]) || $_SESSION["type"] == "Customer") { ?>
+        <?php include("unauthorized.php") ?>
+    <?php } else { ?>
 
         <h2>Order #<?= $order_items_arr[0]["order_id"] ?></h2>
         <h3>Customer ID: <?= $order_items_arr[0]["user_id"] ?></h3>
@@ -112,9 +116,6 @@
         let orderID = document.getElementById("hidden_order").value
         let statusVal = document.getElementById("status")
 
-        document.getElementById("currentURL").href = location.href;
-        document.getElementById("currentURL").textContent = "Current url";
-
         document.getElementById("update-btn").addEventListener("click", () => {
             $.ajax({
                 type: 'POST',
@@ -128,5 +129,7 @@
             }, 1000)
         })
     </script>
+
+    <?php } ?>
 </body>
 </html>

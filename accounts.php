@@ -30,9 +30,8 @@
     } else {
         echo "Logged in";
     }
+
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -45,32 +44,42 @@
     <title>BakeMaster | Accounts</title>
 </head>
 <body>
-    <?php include("header.php") ?>
 
-    <?php if (!empty($result)) { ?>
-    <form action="accounts.php" method="post">
-        <table>
-            <caption>Users</caption>
-            <tr>
-                <th>Email</th>
-                <th>Reg Date</th>
-                <th>Action</th>
-            </tr>
-            <?php foreach($result as $row) { ?>
-            <tr>
-                <td><?= $row["email"] ?></td>
-                <td><?= $row["reg_date"] ?></td>
-                <td><button name="button" value=<?= $row["id"]?>>Delete</button></td>
-            </tr>
-            <?php } ?>
-        </table>
-    </form>
-    <?php } else { ?>
-        <h2>No Users</h2>
-    <?php } ?>
+    <?php if (!empty($_SESSION["type"]) && $_SESSION["type"] == "Admin") { ?>
 
-    <?php include("footer.html"); ?>
+        <?php include("header.php") ?>
+
+        <?php if (!empty($result)) { ?>
+        <form action="accounts.php" method="post">
+            <table>
+                <caption>Users</caption>
+                <tr>
+                    <th>Email</th>
+                    <th>Reg Date</th>
+                    <th>Action</th>
+                </tr>
+                <?php foreach($result as $row) { ?>
+                <tr>
+                    <td><?= $row["email"] ?></td>
+                    <td><?= $row["reg_date"] ?></td>
+                    <td><button name="button" value=<?= $row["id"]?>>Delete</button></td>
+                </tr>
+                <?php } ?>
+            </table>
+        </form>
+        <?php } else { ?>
+            <h2>No Users</h2>
+        <?php } ?>
+        
+        <?php include("footer.html"); ?>
     
+
+    <?php } else { ?>
+        <?php include("unauthorized.php") ?>
+    <?php } ?> 
+
+
+
     <script src="JS/global.js"></script>
 </body>
 </html>

@@ -11,6 +11,7 @@ main {
     padding: 2rem;
     flex-wrap: wrap;
     height: 80vh;
+    margin-top: 1rem;
 }
 
 .left-hero {

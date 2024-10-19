@@ -64,6 +64,13 @@
     <title>BakeMaster | Products</title>
 </head>
 <body>
+
+
+    <?php if (empty($_SESSION["type"]) || $_SESSION["type"] == "Customer") { ?>
+        <?php include("unauthorized.php") ?>
+    <?php } else { ?>
+        
+
     <?php include("header.php") ?>
 
         <main class="relative-container">
@@ -142,8 +149,8 @@
                 }
             })
         })
-            
-
     </script>
+
+    <?php } ?>
 </body>
 </html>

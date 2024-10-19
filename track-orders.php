@@ -30,9 +30,15 @@
     <link rel="stylesheet" href="CSS/global.css ">
     <link rel="stylesheet" href="CSS/headers.css">
     <link rel="stylesheet" href="CSS/admin-dashboard.css">
+    <link rel="stylesheet" href="CSS/track-orders.css">
     <title>Admin Dashboard</title>
 </head>
 <body style="background-image: none; overflow:hidden;">
+
+    <?php if (empty($_SESSION["type"]) || $_SESSION["type"] == "Customer") { ?>
+        <?php include("unauthorized.php") ?>
+    <?php } else { ?>
+
     <h1 style="text-align: center;">Trackings</h1>
     <button id="reload">&#8634;</button>
 
@@ -84,5 +90,8 @@
             window.location.reload();
         })
     </script>
+
+
+    <?php } ?>
 </body>
 </html>

@@ -9,3 +9,37 @@ table {
     width: 80%;
     margin: 0 auto;
 }
+
+.order-container {
+    margin: 0 auto;
+    border: 1px solid black;
+    border-radius: 25px;
+    width: 70%;
+    margin-bottom: 2rem;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    max-width: 800px;
+}
+
+.id-status {
+    display: flex;
+    justify-content: space-between;
+}
+
+.status {
+    font-style: italic;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+button {
+    width: 45%;
+    padding: 1rem 2rem;
+    border-radius: 25px;
+    border: 1px solid black;
+    cursor: pointer;
+}

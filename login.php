@@ -19,11 +19,13 @@
                 while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                     if (password_verify($_POST["password"], $row["password"]) && $row["type"] == "Customer") {
                         $_SESSION["id"] = $row["id"];
-                        $_SESSION["email"] = $_row["email"];
+                        $_SESSION["email"] = $row["email"];
+                        $_SESSION["type"] = $row["type"];
                         header("Location: index.php");
                     } elseif (password_verify($_POST["password"], $row["password"]) && $row["type"] == "Admin") {
                         $_SESSION["id"] = $row["id"];
-                        $_SESSION["email"] = $_row["email"];
+                        $_SESSION["email"] = $row["email"];
+                        $_SESSION["type"] = $row["type"];
                         header("Location: admin-dashboard.php");
                     } else {
                         echo "Incorrect credentials <br>";
@@ -49,6 +51,9 @@
     <link rel="stylesheet" href="CSS/global.css">
     <link rel="stylesheet" href="CSS/headers.css">
     <link rel="stylesheet" href="CSS/login.css">
+
+    <!-- Cart Icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

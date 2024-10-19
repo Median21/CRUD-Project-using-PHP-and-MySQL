@@ -35,22 +35,26 @@
     <title>Admin Dashboard</title>
 </head>
 <body>
-    <?php include("header.php") ?>
 
-  
-        <main>
-            <iframe src="track-orders.php" frameborder="0" height="800px" width="100%" id="orders-frame"></iframe>
-            <hr>
-            <iframe id="frame" src="" frameborder="0" height="500px" width="100%"></iframe>
-        </main>
+    <?php if (empty($_SESSION["type"]) || $_SESSION["type"] == "Customer") { ?>
+        <?php include("unauthorized.php") ?>
+    <?php } else { ?>
+
+        <?php include("header.php") ?>
+            <div class="iframe-container">
+                <iframe src="track-orders.php" frameborder="0" height="800px" width="100%" id="orders-frame"></iframe>
+                <hr>
+                <iframe id="frame" src="" frameborder="0" height="500px" width="100%"></iframe>
+            </div>
 
 
+        <script src="JS/global.js"></script>
+        <script>
+            const ordersFrame = document.getElementById("orders-frame");
+            const detailsFrame = document.getElementById("frame");     
+        </script>
 
+    <?php } ?>
 
-    <script src="JS/global.js"></script>
-    <script>
-        const ordersFrame = document.getElementById("orders-frame");
-        const detailsFrame = document.getElementById("frame");     
-    </script>
 </body>
 </html>

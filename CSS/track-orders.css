@@ -1,0 +1,35 @@
+main {
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+}
+
+section {
+    text-align: left;
+}
+
+.admin-ul {
+    text-align: center;
+}
+
+.orders {
+    display: block;
+}
+
+a {
+    color: black;
+    margin: 1rem 1rem 0 0;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+#reload {
+    display: block;
+    margin-left: auto;
+    width: 30px;
+    height: 30px;
+}
