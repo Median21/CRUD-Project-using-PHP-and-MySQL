@@ -3,7 +3,7 @@
     session_start();
 
     if (empty($_SESSION)) {
-        echo "Not logged in <br>";
+       
     } else {
         echo "Logged in <br>";
         echo "Current user: {$_SESSION['email']}";

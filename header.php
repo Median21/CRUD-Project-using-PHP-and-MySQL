@@ -29,6 +29,7 @@
                         <li class="list-item"><a href="cart.php">Cart <i class="fa fa-shopping-cart"></i></a></li>
                         <li class="list-item"><a href="orders.php">Orders</a></li>
                     <?php } elseif ($_SESSION["type"] == "Admin") { ?>
+                        <li class="list-item"><a href="admin-dashboard.php">Dashboard</a></li>
                         <li class="list-item"><a href="add-product.php">Add</a></li>
                         <li class="list-item"><a href="accounts.php">Accounts</a></li>
                     <?php } ?>

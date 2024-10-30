@@ -70,7 +70,7 @@
                 <?php if ($best_sellers) { ?>
                     <?php foreach($best_sellers as $best_seller) { ?>
                     <div class="food-container">
-                        <img src=products/<?= $best_seller["image"] ?> alt="a">
+                            <img src=products/<?= $best_seller["image"] ?> alt="a">
                             <h3> <?= $best_seller["name"] ?> </h3>
                             <p>Sold: <?= $best_seller["SUM(quantity)"] ?> </p>
                             <p>₱<?= $best_seller["price"] ?></p>

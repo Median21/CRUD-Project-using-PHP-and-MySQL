@@ -213,8 +213,8 @@
                 <p class="price-details">Delivery Fee</p>
                 <p>₱ 50</p>
 
-                <p class="price-details">GRAND TOTAL: </p>
-                <p style="border-top: 1px solid black; padding-top: 2rem">₱ <?= $grand_total + 50 ?></p>
+                <p class="price-details" style="padding-top: 1rem;">GRAND TOTAL: </p>
+                <p style="border-top: 1px solid black; padding-top: 1rem;">₱ <?= $grand_total + 50 ?></p>
 
                 <h6 class="price-details">(12% VAT)</h6>
                 <h6>(₱ <?= $grand_total * 0.12 ?>)</h6>

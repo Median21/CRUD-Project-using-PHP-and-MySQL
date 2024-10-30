@@ -88,6 +88,7 @@ main {
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
     height: 100%;
     width: 100%;
+    z-index: 9999999999999999999999;
 }
 
 .popup {

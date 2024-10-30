@@ -1,66 +1,20 @@
 <?php
     include("connection.php");
+    include("functions.php");
     session_start();
 
-    //Adds to cart
-    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["add-to-cart"]) && !empty($_SESSION["id"])) {
-        $user_id = $_SESSION["id"];
-        $product_id = $_POST["add-to-cart"];
-
-        try {
-            //Find shopping cart record
-            $find_cart_id = $db->query("SELECT * FROM shopping_cart WHERE user_id = '$user_id'");
-            $find_cart_id->execute();
-
-            if ($find_cart_id->rowCount() == 0) { //No shopping chart
-                //Add shopping_cart record for the user
-                echo "No cart found, adding shopping_cart record";
-                $user_cart = $db->query("INSERT INTO
-                                            shopping_cart (user_id)
-                                         VALUES 
-                                            ($user_id)");
-        
-            }
-
-            //Finds the shopping_cart of the USER
-            $final_find_cart_id = $db->query("SELECT * FROM shopping_cart WHERE user_id = '$user_id'");
-            $final_find_cart_id->execute();
-            /* cart_id | user_id */
-
-            //Gets the cart_id
-            $cart_id = $final_find_cart_id->fetch();
-            $cart_id = $cart_id["cart_id"];
-            /* cart_id */
-
-            //Check if there is an existing cart_id and product_id
-            $cart_and_product = $db->query("SELECT * FROM cart_item WHERE cart_id = '$cart_id' AND product_id = '$product_id'");
-            $cart_and_product->execute();
-
-            if ($cart_and_product->rowCount() == 0) { //Add cart item
-                //For cart_item TABLE (ADD new cart_item ROW)
-                $cart_item = $db->prepare("INSERT INTO cart_item (cart_id, product_id, quantity)
-                                           VALUES (:cart_id, :product_id, :quantity)");
-                $cart_item->bindValue(":cart_id", $cart_id);
-                $cart_item->bindValue(":product_id", $product_id);
-                $cart_item->bindValue(":quantity", 1);
-                $cart_item->execute();
-            } else { //Update quantity of cart item
-                $old_quantity = $cart_and_product->fetch(PDO::FETCH_ASSOC);
-                $old_quantity = $old_quantity["quantity"];
-                $new_quantity = $old_quantity + 1;
-                $cart_item = $db->prepare("UPDATE cart_item SET quantity = :quantity WHERE cart_id = :cart_id AND  product_id = :product_id");
-                $cart_item->bindParam(":quantity", $new_quantity);
-                $cart_item->bindParam(":cart_id", $cart_id);
-                $cart_item->bindParam(":product_id", $product_id);
-                $cart_item->execute();
-            }
-
-        } catch (PDOException $e) {
-           echo $e->getMessage();
-        }
+    
+    
+    if (isset($_POST["add-to-cart"])) {
+        add_to_cart($db, $_POST["add-to-cart"], $_SESSION["id"]);
+    } elseif (isset($_POST["reduce-cart"])) {
+        reduce_cart($db, $_POST["reduce-cart"], $_SESSION["id"]);
     }
 
-    //Reduces cart
+    $all_products = show_all_menu($db , empty($_SESSION["id"]) ? null : $_SESSION["id"]);
+    
+
+/*     //Reduces cart
     if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["reduce-cart"]) && !empty($_SESSION["id"])) {
         $user_id = $_SESSION["id"];
         $product_id = $_POST["reduce-cart"];
@@ -99,10 +53,10 @@
         } catch (PDOException $e) {
            echo $e->getMessage();
         }
-    }
+    } */
 
     
-    if (empty($_SESSION["id"])) { //Display all items
+    /* if (empty($_SESSION["id"])) { //Display all items
         $user_id = null;
         $all_products = null;
 
@@ -139,7 +93,9 @@
         } catch (PDOException $e) {
             echo $e->getMessage();
         }
-    }
+    } */
+
+   
 
 ?>
 

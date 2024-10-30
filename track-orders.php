@@ -48,7 +48,7 @@
             <ul class="admin-ul">
                 <?php foreach ($pending_orders as $order) { ?>
                     <li class="orders">
-                        <a href="javascript:void(0)" data-link="order-status.php?order=<?= $order['order_id']?>"> | Order#:<?= $order["order_id"] ?> | </a>
+                        <a href="javascript:void(0)" data-link="order-status.php?order=<?= $order['order_id']?>">Order#:<?= $order["order_id"] ?></a>
                     </li>
                 <?php } ?>
             </ul>
@@ -59,7 +59,7 @@
             <ul class="admin-ul">
                 <?php foreach ($preparing_orders as $order) { ?>
                     <li>
-                        <a href="javascript:void(0)" data-link="order-status.php?order=<?= $order['order_id']?>"> | Order#:<?= $order["order_id"] ?> | </a>
+                        <a href="javascript:void(0)" data-link="order-status.php?order=<?= $order['order_id']?>">Order#:<?= $order["order_id"] ?></a>
                     </li>
                 <?php } ?>
             </ul>
@@ -70,7 +70,7 @@
             <ul class="admin-ul">
             <?php foreach ($completed_orders as $order) { ?>
                 <li>
-                    <a href="javascript:void(0)" data-link="order-status.php?order=<?= $order['order_id']?>" > | Order#:<?= $order["order_id"] ?> | </a>
+                    <a href="javascript:void(0)" data-link="order-status.php?order=<?= $order['order_id']?>" >Order#:<?= $order["order_id"] ?></a>
                 </li>
             <?php } ?>
             </ul>

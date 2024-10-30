@@ -25,11 +25,6 @@
         echo "Error retrieving Users";
     }
 
-    if (empty($_SESSION)) {
-        echo "Not Logged in";
-    } else {
-        echo "Logged in";
-    }
 
 ?>
 

@@ -3,7 +3,6 @@
     width: 80%;
     margin: 0 auto;
     min-height: 80vh;
-    border: 2px solid black;
 }
 
 img {
@@ -21,7 +20,7 @@ main h2 {
     width: 100%;
     padding: 2rem 0;
     min-height: 80vh;
-    border: 2px solid green;
+    border-radius: 20px 0 0 20px;
 }
 
 #add-product-btn {
@@ -37,7 +36,7 @@ main h2 {
     width: 40%;
     background-color: white;
     padding: 3rem 0;
-    border-radius: 20px;
+    border-radius: 0 20px 20px 0;
     position: absolute;
     top: 0;
     z-index: -1;

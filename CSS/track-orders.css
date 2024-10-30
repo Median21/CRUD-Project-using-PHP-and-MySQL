@@ -11,7 +11,17 @@ section {
 }
 
 .admin-ul {
-    text-align: center;
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.admin-ul li::before {
+    content: "[";
+}
+
+.admin-ul li::after {
+    content: "]";
 }
 
 .orders {
@@ -20,7 +30,7 @@ section {
 
 a {
     color: black;
-    margin: 1rem 1rem 0 0;
+
 }
 
 a:hover {

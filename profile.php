@@ -37,7 +37,6 @@
     $get_email->execute();
     $fetch_email = $get_email->fetch(PDO::FETCH_ASSOC);
 
-    echo $fetch_email["email"];
     
 ?>
 
